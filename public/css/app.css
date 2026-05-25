@@ -296,3 +296,55 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .carousel-dots { display: flex; gap: 6px; justify-content: center; margin-top: 1.25rem; }
 .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); cursor: pointer; transition: background 0.2s; border: none; padding: 0; }
 .carousel-dot.active { background: var(--accent); }
+
+/* ══ BOTÓN FLOTANTE CONTACTO ══ */
+.float-contact {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 500;
+  display: flex; align-items: center; gap: 10px;
+  background: var(--accent); color: #0c0e0f;
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 12px 20px; border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(240,192,64,0.35);
+  transition: all 0.25s;
+  animation: fadeUp 0.6s 1s ease both;
+}
+.float-contact:hover {
+  background: var(--accent2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(240,192,64,0.45);
+}
+.float-contact span {
+  display: inline-block;
+  max-width: 0; overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.3s ease;
+}
+.float-contact:hover span { max-width: 120px; }
+
+/* ══ NAV DISPONIBLE ══ */
+.nav-available {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  color: var(--text2); text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 5px 12px; border-radius: 20px;
+  transition: all 0.2s;
+}
+.nav-available:hover { color: var(--accent); border-color: var(--accent-border); background: var(--accent-dim); }
+.nav-available-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+  animation: blink 2s infinite;
+}
+
+/* ══ FLOAT WHATSAPP ══ */
+.float-contact {
+  background: #25D366;
+  box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+}
+.float-contact:hover {
+  background: #1ebe5d;
+  box-shadow: 0 8px 32px rgba(37,211,102,0.45);
+}
