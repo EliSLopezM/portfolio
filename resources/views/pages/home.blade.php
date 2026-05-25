@@ -1,5 +1,11 @@
 ﻿@extends('layouts.app')
+@section('title', 'Eli Santiago López — Ingeniero de Sistemas & Full Stack Developer')
+@section('description', 'Ingeniero de Sistemas con +3 años desarrollando plataformas web robustas con PHP/Laravel, Angular y Docker.')
 @section('content')
-  @include('sections.hero', ['portfolio' => $portfolio])
-  @include('sections.sobre', ['portfolio' => $portfolio])
+  @include('sections.hero',        ['portfolio' => $portfolio])
+  @include('sections.sobre',       ['portfolio' => $portfolio])
+  @include('sections.stack',       ['portfolio' => $portfolio])
+  @include('sections.proyectos',   ['portfolio' => $portfolio])
+  @include('sections.experiencia', ['portfolio' => $portfolio])
+  @include('sections.cta',         ['portfolio' => $portfolio])
 @endsection
