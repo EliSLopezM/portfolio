@@ -26,6 +26,8 @@
   @stack('head')
 </head>
 <body>
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
   @include('partials.nav')
   <main>
     @yield('content')
