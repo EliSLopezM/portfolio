@@ -1,4 +1,4 @@
-<section id="stack" class="section">
+<section id="stack" class="section section-light">
   <div class="container">
     <div class="section-header">
       <span class="section-label">// 02 — stack</span>

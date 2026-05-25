@@ -1,4 +1,4 @@
-<section id="contacto" class="section section-alt">
+<section class="page-section section-light">
   <div class="container">
     <div class="section-header">
       <span class="section-label">// 05 — contacto</span>

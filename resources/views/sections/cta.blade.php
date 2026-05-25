@@ -1,4 +1,4 @@
-﻿<section class="section section-alt">
+﻿<section class="section section-light">
   <div class="container">
     <div class="cta-wrap">
       <span class="section-label">// trabajemos juntos</span>

@@ -9,3 +9,11 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+/* ══ HERO AJUSTES ══ */
+.hero-inner {
+  padding-left: clamp(1.5rem, 5vw, 4rem);
+}
+.hero-photo-wrap {
+  padding-top: 0;
+  align-items: center;
+}
