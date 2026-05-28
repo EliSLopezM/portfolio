@@ -1,3 +1,7 @@
+{{-- resources/views/sections/experiencia.blade.php --}}
+
+@include('sections.certificados', ['portfolio' => $portfolio])
+
 <section id="experiencia" class="section">
   <div class="container">
     <div class="section-header">

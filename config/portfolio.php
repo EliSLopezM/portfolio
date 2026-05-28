@@ -11,13 +11,13 @@ return [
     'github'   => 'https://github.com/EliSLopezM',
     'linkedin' => 'https://linkedin.com/in/eli-santiago',
     'cv_path'  => '/cv/CV_EliSantiago_Lopez.pdf',
-    'available'=> true,
+    'available' => true,
 
     'stats' => [
         ['value' => '3+',  'label' => 'Años de experiencia'],
         ['value' => '6',   'label' => 'Proyectos en producción'],
         ['value' => '2',   'label' => 'Apps móviles publicadas'],
-        ['value' => '100%','label' => 'Proyectos entregados'],
+        ['value' => '100%', 'label' => 'Proyectos entregados'],
     ],
 
     'about' => [
@@ -27,18 +27,106 @@ return [
     ],
 
     'stack' => [
-        ['abbr' => 'PHP',  'name' => 'PHP 8.2',        'type' => 'Lenguaje principal'],
-        ['abbr' => 'LRV',  'name' => 'Laravel',         'type' => 'Framework backend'],
-        ['abbr' => 'PY',   'name' => 'Python',           'type' => 'Scripting & automatización'],
-        ['abbr' => 'NG',   'name' => 'Angular',          'type' => 'Framework frontend'],
-        ['abbr' => 'NODE', 'name' => 'Node.js',          'type' => 'Runtime JS backend'],
-        ['abbr' => 'GO',   'name' => 'Go',               'type' => 'Microservicios'],
-        ['abbr' => 'FB',   'name' => 'Firebase',         'type' => 'Auth & tiempo real'],
-        ['abbr' => 'MY',   'name' => 'MySQL / PgSQL',    'type' => 'Bases de datos'],
-        ['abbr' => 'DKR',  'name' => 'Docker',           'type' => 'Contenedores & deploy'],
-        ['abbr' => 'MOB',  'name' => 'Android / iOS',    'type' => 'Apps móviles'],
-        ['abbr' => 'LNX',  'name' => 'Servidores Linux', 'type' => 'Nginx, infraestructura'],
-        ['abbr' => 'API',  'name' => 'REST APIs',        'type' => 'Diseño & integración'],
+        [
+            'name' => 'PHP',
+            'type' => 'Lenguaje backend principal',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Laravel',
+            'type' => 'Framework backend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Angular',
+            'type' => 'Framework frontend SPA',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Python',
+            'type' => 'Scripting & automatización',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Node.js',
+            'type' => 'Runtime JS backend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Go',
+            'type' => 'Microservicios & APIs',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Firebase',
+            'type' => 'Auth & tiempo real',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'MySQL',
+            'type' => 'Base de datos relacional',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'PostgreSQL',
+            'type' => 'Base de datos relacional',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Docker',
+            'type' => 'Contenedores & despliegue',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Android',
+            'type' => 'Aplicaciones móviles',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'iOS / Swift',
+            'type' => 'Aplicaciones móviles Apple',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Linux',
+            'type' => 'Servidores & infraestructura',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'REST APIs',
+            'type' => 'Diseño e integración',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'JavaScript',
+            'type' => 'Lenguaje frontend',
+            'level' => 'conocimiento',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'WordPress',
+            'type' => 'CMS & desarrollo web',
+            'level' => 'conocimiento',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Java',
+            'type' => 'Backend empresarial',
+            'level' => 'conocimiento',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Spring Boot',
+            'type' => 'Framework Java',
+            'level' => 'conocimiento',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'MongoDB',
+            'type' => 'Base de datos NoSQL',
+            'level' => 'conocimiento',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="36" height="36">',
+        ],
     ],
 
     'projects' => [
@@ -123,6 +211,98 @@ return [
     'languages' => [
         ['name' => 'Español', 'level' => 'Nativo',            'pct' => 100],
         ['name' => 'Inglés',  'level' => 'Básico-Intermedio', 'pct' => 45],
+    ],
+    'certs' => [
+        // ── Destacados ──
+        [
+            'title'    => 'Diploma de Grado — Ing. de Sistemas',
+            'platform' => 'Los Libertadores',
+            'year'     => '2024',
+            'pdf'      => 'diploma-grado.pdf',
+            'preview'  => 'diploma-grado.jpg',
+            'category' => 'destacado',
+        ],
+        [
+            'title'    => 'Auditor Interno ISO/IEC 27001:2022',
+            'platform' => 'ICONTEC',
+            'year'     => '2024',
+            'pdf'      => 'iso-27001.pdf',
+            'preview'  => 'iso-27001.jpg',
+            'category' => 'destacado',
+        ],
+        [
+            'title'    => 'Seminario Big Data Analytics',
+            'platform' => 'Los Libertadores',
+            'year'     => '2023',
+            'pdf'      => 'big-data-analytics.pdf',
+            'preview'  => 'big-data-analytics.png',
+            'category' => 'destacado',
+        ],
+        // ── Cursos ──
+        [
+            'title'    => 'Curso de Git y GitHub',
+            'platform' => 'Platzi',
+            'year'     => '2025',
+            'pdf'      => 'git-github.pdf',
+            'preview'  => 'git-github.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Taller Ciberseguridad para Prevenir Ataques',
+            'platform' => 'Platzi',
+            'year'     => '2025',
+            'pdf'      => 'ciberseguridad-ataques.pdf',
+            'preview'  => 'ciberseguridad-ataques.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Seguridad y Privacidad Digital',
+            'platform' => 'MinTIC',
+            'year'     => '2024',
+            'pdf'      => 'seguridad-privacidad.pdf',
+            'preview'  => 'seguridad-privacidad.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Seguridad Digital',
+            'platform' => 'MinTIC',
+            'year'     => '2024',
+            'pdf'      => 'seguridad-digital.pdf',
+            'preview'  => 'seguridad-digital.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Curso de Testing Estático',
+            'platform' => 'Código Facilito',
+            'year'     => '2024',
+            'pdf'      => 'testing-estatico.pdf',
+            'preview'  => 'testing-estatico.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Curso Profesional de Go',
+            'platform' => 'Código Facilito',
+            'year'     => '2024',
+            'pdf'      => 'golang-profesional.pdf',
+            'preview'  => 'golang-profesional.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Bases de Datos — Generalidades y Gestión',
+            'platform' => 'SENA',
+            'year'     => '2021',
+            'pdf'      => 'sena-bases-de-datos.pdf',
+            'preview'  => 'sena-bases-de-datos.png',
+            'category' => 'curso',
+        ],
+        [
+            'title'    => 'Soporte Técnico — Mantenimiento de Equipos',
+            'platform' => 'SENA',
+            'year'     => '2021',
+            'pdf'      => 'sena-soporte-tecnico.pdf',
+            'preview'  => 'sena-soporte-tecnico.png',
+            'category' => 'curso',
+        ],
     ],
 
 ];
