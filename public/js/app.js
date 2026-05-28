@@ -172,3 +172,202 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+/* =============================================
+   STACK TOGGLE JS — va en public/js/app.js
+   Busca el bloque de stackToggle y reemplázalo
+   ============================================= */
+
+// Stack — Ver más / Ver menos
+(function () {
+    const btn      = document.getElementById('stackToggle');
+    const cards    = document.querySelectorAll('.stack-card.stack-hidden');
+    const iconGrid = btn ? btn.querySelector('.icon-grid') : null;
+    const iconCol  = btn ? btn.querySelector('.icon-collapse') : null;
+    const txtSpan  = btn ? btn.querySelector('.toggle-text') : null;
+
+    if (!btn || !cards.length) return;
+
+    let expanded = false;
+
+    btn.addEventListener('click', function () {
+        expanded = !expanded;
+
+        cards.forEach(function (card, i) {
+            if (expanded) {
+                // Quitar clase que oculta + animar entrada escalonada
+                card.classList.remove('stack-hidden');
+                card.classList.remove('stack-reveal');
+                setTimeout(function () {
+                    card.classList.add('stack-reveal');
+                }, i * 60);
+            } else {
+                // Volver a ocultar y limpiar animación
+                card.classList.add('stack-hidden');
+                card.classList.remove('stack-reveal');
+            }
+        });
+
+        // Actualizar texto e iconos
+        if (txtSpan)  txtSpan.textContent       = expanded ? 'Ver menos' : 'Ver más';
+        if (iconGrid) iconGrid.style.display    = expanded ? 'none' : '';
+        if (iconCol)  iconCol.style.display     = expanded ? ''     : 'none';
+
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+
+        // Scroll suave hacia arriba al colapsar
+        if (!expanded) {
+            document.getElementById('stack')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+})();
+/* ── CERT MODAL ── */
+function openCertModal(card) {
+    var modal  = document.getElementById('certModal');
+    var iframe = document.getElementById('certModalIframe');
+    var title  = document.getElementById('certModalTitle');
+    var link   = document.getElementById('certModalDownload');
+    if (!modal || !iframe) return;
+    title.textContent = card.getAttribute('data-title') || 'Certificado';
+    link.href         = card.getAttribute('data-pdf');
+    iframe.src        = card.getAttribute('data-pdf') + '#toolbar=0&view=FitH';
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+(function () {
+    var modal    = document.getElementById('certModal');
+    var closeBtn = document.getElementById('certModalClose');
+    var iframe   = document.getElementById('certModalIframe');
+    if (!modal) return;
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(function () { if (iframe) iframe.src = ''; }, 300);
+    }
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
+})();
+
+/* ── CERTS SPOTLIGHT ── */
+(function () {
+    var track    = document.getElementById('certsTrack');
+    var dotsWrap = document.getElementById('cscDots');
+    var prevBtn  = document.getElementById('cscPrev');
+    var nextBtn  = document.getElementById('cscNext');
+    var filters  = document.querySelectorAll('.certs-filter-btn');
+
+    if (!track) return;
+
+    var allCards  = Array.from(track.querySelectorAll('.certs-spotlight-card'));
+    var visible   = allCards.slice();
+    var current   = 0;
+    var autoTimer = null;
+    var AUTO_DELAY = 5000;
+
+    /* ── Renderizar ── */
+    function render() {
+        // Primero ocultar TODAS
+        allCards.forEach(function(card) {
+            card.classList.remove('active', 'adjacent');
+            card.style.display = 'none';
+        });
+
+        // Mostrar solo las visibles con su posición
+        visible.forEach(function(card, i) {
+            var diff = i - current;
+            card.style.display = '';
+            if (diff === 0) {
+                card.classList.add('active');
+            } else if (Math.abs(diff) === 1) {
+                card.classList.add('adjacent');
+            } else {
+                card.style.display = 'none'; // ocultar las que no son adyacentes
+            }
+        });
+
+        // Dots
+        if (dotsWrap) {
+            Array.from(dotsWrap.children).forEach(function(dot, i) {
+                dot.classList.toggle('active', i === current);
+            });
+        }
+    }
+
+    /* ── Rebuild dots ── */
+    function buildDots() {
+        if (!dotsWrap) return;
+        dotsWrap.innerHTML = '';
+        visible.forEach(function(_, i) {
+            var dot = document.createElement('button');
+            dot.className = 'csc-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', function() { goTo(i); resetAuto(); });
+            dotsWrap.appendChild(dot);
+        });
+    }
+
+    /* ── Navegar ── */
+    function goTo(idx) {
+        current = ((idx % visible.length) + visible.length) % visible.length;
+        render();
+    }
+
+    /* ── Auto-scroll ── */
+    function startAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function() { goTo(current + 1); }, AUTO_DELAY);
+    }
+    function resetAuto() { startAuto(); }
+
+    /* ── Filtros ── */
+    filters.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            filters.forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+
+            var cat = btn.getAttribute('data-filter');
+            visible = allCards.filter(function(card) {
+                var cardCat = card.getAttribute('data-category') || 'curso';
+                return cat === 'all' || cardCat === cat;
+            });
+
+            if (visible.length === 0) visible = allCards.slice(); // fallback
+            current = 0;
+            buildDots();
+            render();
+            resetAuto();
+        });
+    });
+
+    /* ── Botones nav ── */
+    if (prevBtn) prevBtn.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+
+    /* ── Click en tarjeta adyacente ── */
+    allCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+            var idx = visible.indexOf(card);
+            if (idx !== -1 && idx !== current) { goTo(idx); resetAuto(); }
+        });
+    });
+
+    /* ── Pausa al hover ── */
+    track.addEventListener('mouseenter', function() { clearInterval(autoTimer); });
+    track.addEventListener('mouseleave', startAuto);
+
+    /* ── Touch swipe ── */
+    var startX = 0;
+    track.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX; clearInterval(autoTimer);
+    }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+        var diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+        startAuto();
+    });
+
+    /* ── Init ── */
+    buildDots();
+    render();
+    startAuto();
+})();
