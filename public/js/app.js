@@ -371,3 +371,31 @@ function openCertModal(card) {
     render();
     startAuto();
 })();
+
+/* ── Nav Home Dropdown ── */
+(function () {
+    var btn      = document.getElementById('navHomeBtn');
+    var dropdown = document.getElementById('navHomeDropdown');
+    var wrap     = document.getElementById('navHomeWrap');
+    if (!btn || !dropdown) return;
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var open = dropdown.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!wrap.contains(e.target)) {
+            dropdown.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            dropdown.classList.remove('open');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+    });
+})();
