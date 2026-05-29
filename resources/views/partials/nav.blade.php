@@ -1,10 +1,45 @@
 <nav class="nav" id="navbar">
-  <a href="{{ route('portfolio') }}" class="nav-home-btn" title="Inicio">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-      <polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  </a>
+  {{-- Botón inicio con dropdown --}}
+  <div class="nav-home-wrap" id="navHomeWrap">
+    <button class="nav-home-btn" id="navHomeBtn" title="Cambiar perfil" aria-haspopup="true" aria-expanded="false">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+      <span class="nav-home-label">Perfiles</span>
+      <svg class="nav-home-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="nav-home-dropdown" id="navHomeDropdown" role="menu">
+      <a href="{{ route('portfolio') }}" class="nav-home-option" role="menuitem">
+        <span class="nav-home-option-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </span>
+        <div>
+          <div class="nav-home-option-title">Perfil Dev</div>
+          <div class="nav-home-option-sub">Ingeniero de Sistemas</div>
+        </div>
+      </a>
+      <a href="{{ route('dcc.index') }}" class="nav-home-option nav-home-option-dcc" role="menuitem">
+        <span class="nav-home-option-icon nav-home-option-icon-dcc">
+          {{-- Escudo DCC más visible --}}
+          <svg width="22" height="22" viewBox="0 0 24 28" fill="none">
+            <path d="M12 1L2 6v10c0 7 5 11.5 10 12.5 5-1 10-5.5 10-12.5V6L12 1z" fill="#E8700A"/>
+            <path d="M12 5L5 9v7c0 4.5 3.2 7.5 7 8.5 3.8-1 7-4 7-8.5V9L12 5z" fill="#003DA5"/>
+            <line x1="12" y1="10" x2="12" y2="20" stroke="white" stroke-width="2.2"/>
+            <line x1="7.5" y1="15" x2="16.5" y2="15" stroke="white" stroke-width="2.2"/>
+          </svg>
+        </span>
+        <div>
+          <div class="nav-home-option-title">Perfil DCC</div>
+          <div class="nav-home-option-sub">Defensa Civil Colombiana</div>
+        </div>
+      </a>
+    </div>
+  </div>
   <ul class="nav-links" id="navLinks">
     <li>
       <a href="{{ route('portfolio') }}#sobre" class="nav-link {{ request()->routeIs('portfolio') ? 'active' : '' }}">
