@@ -141,18 +141,14 @@ El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Per
 
 ---
 
-## 📬 Formulario de contacto
+## Enlaces oficiales
 
-El formulario usa `POST /contacto` con validación Laravel.
-Para activar el envío real de emails:
+- GitHub: https://github.com/EliSLopezM
+- LinkedIn: https://www.linkedin.com/in/eli-santiago-lopez-mahecha-56a9861b9/
+- Email: eslopez.dev@gmail.com
 
-1. Descomenta la línea `Mail::to(...)` en `PortfolioController.php`
-2. Crea `app/Mail/ContactMail.php` con `php artisan make:mail ContactMail`
-3. Configura las variables MAIL_* en `.env`
+## Autoría
 
-O usa **Formspree** (gratis, sin backend) cambiando el `action` del form en
-`sections/contacto.blade.php` a `https://formspree.io/f/YOUR_ID`.
-
----
+Copyright 2026 Eli Santiago López Mahecha. Todos los derechos reservados sobre el contenido, identidad y material original de este portafolio.
 
 **Eli Santiago López · eslopez.dev@gmail.com**
