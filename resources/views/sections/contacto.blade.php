@@ -70,15 +70,20 @@
         <div class="form-group">
           <label for="phone_number_home">TELÉFONO *</label>
           <div class="phone-fields">
-            <div class="country-select">
-              <span class="fi fi-co country-flag" id="country-flag-home" aria-hidden="true"></span>
-              <select id="phone_country_iso_home" name="phone_country_iso" aria-label="País del teléfono" required>
-                <option value="CO" data-code="+57" @selected(old('phone_country_iso', 'CO') === 'CO')>+57 Colombia</option>
-                <option value="PR" data-code="+1" @selected(old('phone_country_iso') === 'PR')>+1 Puerto Rico</option>
-                <option value="US" data-code="+1" @selected(old('phone_country_iso') === 'US')>+1 Estados Unidos</option>
-                <option value="MX" data-code="+52" @selected(old('phone_country_iso') === 'MX')>+52 México</option>
-                <option value="ES" data-code="+34" @selected(old('phone_country_iso') === 'ES')>+34 España</option>
-              </select>
+            <div class="country-picker" data-country-picker>
+              <input type="hidden" id="phone_country_iso_home" name="phone_country_iso" value="{{ old('phone_country_iso', 'CO') }}">
+              <button type="button" class="country-picker-button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="fi fi-co country-flag" data-country-flag aria-hidden="true"></span>
+                <span data-country-label>+57 Colombia</span>
+                <span class="country-picker-chevron" aria-hidden="true">⌄</span>
+              </button>
+              <div class="country-picker-menu" role="listbox" tabindex="-1">
+                <button type="button" role="option" data-country="CO" data-code="+57" data-label="+57 Colombia" class="country-option"><span class="fi fi-co country-flag" aria-hidden="true"></span><span>+57 Colombia</span></button>
+                <button type="button" role="option" data-country="PR" data-code="+1" data-label="+1 Puerto Rico" class="country-option"><span class="fi fi-pr country-flag" aria-hidden="true"></span><span>+1 Puerto Rico</span></button>
+                <button type="button" role="option" data-country="US" data-code="+1" data-label="+1 Estados Unidos" class="country-option"><span class="fi fi-us country-flag" aria-hidden="true"></span><span>+1 Estados Unidos</span></button>
+                <button type="button" role="option" data-country="MX" data-code="+52" data-label="+52 México" class="country-option"><span class="fi fi-mx country-flag" aria-hidden="true"></span><span>+52 México</span></button>
+                <button type="button" role="option" data-country="ES" data-code="+34" data-label="+34 España" class="country-option"><span class="fi fi-es country-flag" aria-hidden="true"></span><span>+34 España</span></button>
+              </div>
             </div>
             <input type="hidden" id="phone_country_code_home" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}" required>
             <input id="phone_number_home" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}" required>
@@ -141,10 +146,6 @@
           document.getElementById('recaptcha-token-home').value = token;
           event.target.submit();
         }));
-      });
-      document.getElementById('phone_country_iso_home')?.addEventListener('change', function () {
-        document.getElementById('phone_country_code_home').value = this.selectedOptions[0].dataset.code;
-        document.getElementById('country-flag-home').className = `fi fi-${this.value.toLowerCase()} country-flag`;
       });
     </script>
   @endpush

@@ -154,6 +154,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── COUNTRY PICKER ── */
+  document.querySelectorAll('[data-country-picker]').forEach(picker => {
+    const button = picker.querySelector('.country-picker-button');
+    const menu = picker.querySelector('.country-picker-menu');
+    const isoInput = picker.querySelector('input[name="phone_country_iso"]');
+    const codeInput = picker.querySelector('input[name="phone_country_code"]');
+    const label = picker.querySelector('[data-country-label]');
+    const flag = picker.querySelector('[data-country-flag]');
+    const options = picker.querySelectorAll('.country-option');
+
+    function selectCountry(option) {
+      const country = option.dataset.country.toLowerCase();
+      isoInput.value = option.dataset.country;
+      codeInput.value = option.dataset.code;
+      label.textContent = option.dataset.label;
+      flag.className = `fi fi-${country} country-flag`;
+      options.forEach(item => item.setAttribute('aria-selected', item === option ? 'true' : 'false'));
+    }
+
+    const initial = [...options].find(option => option.dataset.country === isoInput.value) || options[0];
+    if (initial) selectCountry(initial);
+
+    button.addEventListener('click', () => {
+      const isOpen = picker.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (isOpen) menu.focus();
+    });
+    options.forEach(option => option.addEventListener('click', () => {
+      selectCountry(option);
+      picker.classList.remove('is-open');
+      button.setAttribute('aria-expanded', 'false');
+      button.focus();
+    }));
+    document.addEventListener('click', event => {
+      if (!picker.contains(event.target)) {
+        picker.classList.remove('is-open');
+        button.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
   /* ── CURSOR PERSONALIZADO ── */
   const dot  = document.getElementById('cursorDot');
   const ring = document.getElementById('cursorRing');
