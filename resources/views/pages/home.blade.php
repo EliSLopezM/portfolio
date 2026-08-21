@@ -5,6 +5,7 @@
   @include('sections.hero',        ['portfolio' => $portfolio])
   @include('sections.sobre',       ['portfolio' => $portfolio])
   @include('sections.stack',       ['portfolio' => $portfolio])
+  @include('sections.procesos-ia', ['portfolio' => $portfolio])
   @include('sections.proyectos',   ['portfolio' => $portfolio])
   @include('sections.experiencia', ['portfolio' => $portfolio])
   @include('sections.cta',         ['portfolio' => $portfolio])

@@ -10,61 +10,65 @@
             <h2>Tecnologías con las<br><strong>que construyo soluciones</strong></h2>
         </div>
 
-        <div class="stack-grid" id="stackGrid">
-            @foreach($portfolio['stack'] as $index => $tech)
-            <div class="stack-card {{ $index >= 12 ? 'stack-hidden' : '' }}" data-index="{{ $index }}">
-                <div class="stack-card-inner">
+        @php
+            $stackGroups = [
+                'backend'        => ['label' => 'Backend', 'sub' => 'Donde más disfruto trabajar — mi área más fuerte.', 'featured' => true],
+                'frontend'       => ['label' => 'Frontend', 'sub' => 'Interfaces y experiencia de usuario.', 'featured' => false],
+                'ciberseguridad' => ['label' => 'Ciberseguridad', 'sub' => 'Gestión de identidad, scripting de seguridad e infraestructura.', 'featured' => false],
+            ];
+            $stackByCategory = collect($portfolio['stack'])->groupBy(fn ($tech) => $tech['category'] ?? 'backend');
+        @endphp
 
-                    {{-- Frente --}}
-                    <div class="stack-card-front">
-                        <div class="stack-icon">
-                            {!! $tech['svg'] !!}
+        @foreach($stackGroups as $groupKey => $groupMeta)
+            @continue($stackByCategory->get($groupKey, collect())->isEmpty())
+            <div class="stack-category {{ $groupMeta['featured'] ? 'stack-category-featured' : '' }}">
+                <div class="stack-category-header">
+                    <h3 class="stack-category-title">
+                        {{ $groupMeta['label'] }}
+                        @if($groupMeta['featured'])
+                            <span class="stack-favorite-badge">★ Favorito</span>
+                        @endif
+                    </h3>
+                    <p class="stack-category-sub">{{ $groupMeta['sub'] }}</p>
+                </div>
+
+                <div class="stack-grid" id="stackGrid-{{ $groupKey }}">
+                    @foreach($stackByCategory->get($groupKey) as $index => $tech)
+                    <div class="stack-card" data-index="{{ $index }}">
+                        <div class="stack-card-inner">
+
+                            {{-- Frente --}}
+                            <div class="stack-card-front">
+                                <div class="stack-icon">
+                                    {!! $tech['svg'] !!}
+                                </div>
+                                <span class="stack-name">{{ $tech['name'] }}</span>
+                                @if(isset($tech['level']))
+                                    <span class="stack-badge">Conocimiento</span>
+                                @endif
+                            </div>
+
+                            {{-- Reverso --}}
+                            <div class="stack-card-back">
+                                <div class="stack-icon stack-icon-back">
+                                    {!! $tech['svg'] !!}
+                                </div>
+                                <span class="stack-name-back">{{ $tech['name'] }}</span>
+                                @if(isset($tech['level']))
+                                    <span class="stack-level">Conocimiento</span>
+                                @else
+                                    <span class="stack-level">Dominio</span>
+                                @endif
+                                @if(isset($tech['type']))
+                                    <span style="font-size:0.6rem;color:rgba(255,255,255,0.5);text-align:center;margin-top:2px;">{{ $tech['type'] }}</span>
+                                @endif
+                            </div>
+
                         </div>
-                        <span class="stack-name">{{ $tech['name'] }}</span>
-                        @if(isset($tech['level']))
-                            <span class="stack-badge">Conocimiento</span>
-                        @endif
                     </div>
-
-                    {{-- Reverso --}}
-                    <div class="stack-card-back">
-                        <div class="stack-icon stack-icon-back">
-                            {!! $tech['svg'] !!}
-                        </div>
-                        <span class="stack-name-back">{{ $tech['name'] }}</span>
-                        @if(isset($tech['level']))
-                            <span class="stack-level">Conocimiento</span>
-                        @else
-                            <span class="stack-level">Dominio</span>
-                        @endif
-                        @if(isset($tech['type']))
-                            <span style="font-size:0.6rem;color:rgba(255,255,255,0.5);text-align:center;margin-top:2px;">{{ $tech['type'] }}</span>
-                        @endif
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
-            @endforeach
-        </div>
-
-        {{-- Botón Ver más / Ver menos --}}
-        @if(count($portfolio['stack']) > 12)
-        <div class="stack-toggle-wrap">
-            <button class="stack-toggle-btn" id="stackToggle" aria-expanded="false">
-                <span class="toggle-text">Ver más</span>
-                <span class="toggle-icon" aria-hidden="true">
-                    <svg class="icon-grid" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"/>
-                        <rect x="14" y="3" width="7" height="7"/>
-                        <rect x="3" y="14" width="7" height="7"/>
-                        <rect x="14" y="14" width="7" height="7"/>
-                    </svg>
-                    <svg class="icon-collapse" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <polyline points="18 15 12 9 6 15"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
-        @endif
+        @endforeach
     </div>
 </section>

@@ -399,3 +399,43 @@ function openCertModal(card) {
         }
     });
 })();
+
+/* ── Procesos IA — carrusel horizontal automático ── */
+(function () {
+    var track = document.getElementById('iaTrack');
+    if (!track) return;
+
+    var AUTO_DELAY = 3200;
+    var timer = null;
+
+    function step() {
+        var card = track.querySelector('.ia-card');
+        if (!card) return;
+        var style = window.getComputedStyle(track);
+        var gap = parseFloat(style.columnGap || style.gap) || 20;
+        var cardWidth = card.getBoundingClientRect().width + gap;
+        var maxScroll = track.scrollWidth - track.clientWidth;
+
+        if (track.scrollLeft >= maxScroll - 4) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+    }
+
+    function start() {
+        clearInterval(timer);
+        timer = setInterval(step, AUTO_DELAY);
+    }
+    function stop() { clearInterval(timer); }
+
+    track.addEventListener('mouseenter', stop);
+    track.addEventListener('mouseleave', start);
+    track.addEventListener('touchstart', stop, { passive: true });
+    track.addEventListener('touchend', function () {
+        clearInterval(timer);
+        setTimeout(start, 2500);
+    }, { passive: true });
+
+    start();
+})();
