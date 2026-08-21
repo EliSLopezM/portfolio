@@ -40,12 +40,20 @@ class PortfolioController extends Controller
             'nombre'  => 'required|string|max:100',
             'email'   => 'required|email|max:150',
             'asunto'  => 'nullable|string|max:200',
-            'mensaje' => 'required|string|max:2000',
+            'phone_country_iso' => 'nullable|string|size:2|alpha|uppercase',
+            'phone_country_code' => 'nullable|string|regex:/^\+[1-9][0-9]{0,3}$/',
+            'phone_number' => 'nullable|string|regex:/^[0-9 ()-]{7,20}$/',
+            'mensaje' => 'required|string|max:1500',
+            'website' => 'nullable|size:0',
         ]);
 
         // Verificación reCAPTCHA — solo se activa si hay secret key configurada.
         $recaptchaSecret = config('services.recaptcha.secret_key');
         if ($recaptchaSecret) {
+            if (! $request->filled('g-recaptcha-response')) {
+                return back()->withErrors(['recaptcha' => 'No pudimos verificar el reCAPTCHA. Inténtalo de nuevo.'])->withInput();
+            }
+
             $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
                 'secret'   => $recaptchaSecret,
                 'response' => $request->input('g-recaptcha-response'),
@@ -62,6 +70,7 @@ class PortfolioController extends Controller
             }
         }
 
+        unset($validated['website']);
         \App\Models\Message::create($validated);
 
         try {

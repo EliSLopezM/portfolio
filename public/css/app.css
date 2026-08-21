@@ -180,6 +180,12 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .contact-intro { font-size: 1rem; color: var(--text2); font-weight: 300; line-height: 1.75; margin-bottom: 2.5rem; }
 .alert-success { display: flex; align-items: center; gap: 10px; background: rgba(240,192,64,0.08); border: 1px solid var(--accent-border); color: var(--accent); font-size: 13px; padding: 12px 16px; border-radius: var(--radius); margin-bottom: 1.5rem; }
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.phone-fields { display: grid; grid-template-columns: minmax(155px, 0.8fr) 1fr; gap: 0.5rem; }
+.phone-fields select, .phone-fields input { min-width: 0; }
+.form-help, .recaptcha-notice { font-size: 11px; color: var(--text3); }
+.recaptcha-notice { line-height: 1.5; margin-top: -0.25rem; }
+.recaptcha-notice a { color: var(--accent); }
+.honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .form-group { display: flex; flex-direction: column; gap: 5px; }
 .form-group label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text3); }
@@ -285,6 +291,7 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
     .hero-actions .btn { width: 100%; justify-content: center; }
     .float-contact { right: 1rem; bottom: 1rem; padding: 11px 14px; }
     .float-contact span { max-width: 120px; }
+    .phone-fields { grid-template-columns: 1fr; }
 }
 
 /* ── CERTS CAROUSEL ── */

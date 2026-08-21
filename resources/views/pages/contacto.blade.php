@@ -30,11 +30,30 @@
           </div>
           <div class="form-group">
             <label for="asunto">ASUNTO</label>
-            <input id="asunto" name="asunto" type="text" placeholder="Proyecto, consultoría, etc." value="{{ old('asunto') }}"/>
+            <input id="asunto" name="asunto" type="text" maxlength="200" placeholder="Proyecto, consultoría, etc." value="{{ old('asunto') }}"/>
+          </div>
+          <div class="form-group">
+            <label for="phone_number">TELÉFONO (OPCIONAL)</label>
+            <div class="phone-fields">
+              <select id="phone_country_iso" name="phone_country_iso" aria-label="País del teléfono">
+                <option value="CO" data-code="+57" @selected(old('phone_country_iso', 'CO') === 'CO')>🇨🇴 +57 Colombia</option>
+                <option value="PR" data-code="+1" @selected(old('phone_country_iso') === 'PR')>🇵🇷 +1 Puerto Rico</option>
+                <option value="US" data-code="+1" @selected(old('phone_country_iso') === 'US')>🇺🇸 +1 Estados Unidos</option>
+                <option value="MX" data-code="+52" @selected(old('phone_country_iso') === 'MX')>🇲🇽 +52 México</option>
+                <option value="ES" data-code="+34" @selected(old('phone_country_iso') === 'ES')>🇪🇸 +34 España</option>
+                <option value="AR" data-code="+54" @selected(old('phone_country_iso') === 'AR')>🇦🇷 +54 Argentina</option>
+                <option value="CL" data-code="+56" @selected(old('phone_country_iso') === 'CL')>🇨🇱 +56 Chile</option>
+                <option value="PE" data-code="+51" @selected(old('phone_country_iso') === 'PE')>🇵🇪 +51 Perú</option>
+              </select>
+              <input type="hidden" id="phone_country_code" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}">
+              <input id="phone_number" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}" aria-describedby="phone-help">
+            </div>
+            <small id="phone-help" class="form-help">Incluye solo números, espacios, paréntesis o guiones.</small>
+            @error('phone_number') <span class="form-error">{{ $message }}</span> @enderror
           </div>
           <div class="form-group {{ $errors->has('mensaje') ? 'has-error' : '' }}">
             <label for="mensaje">MENSAJE</label>
-            <textarea id="mensaje" name="mensaje" rows="6" placeholder="Cuéntame sobre tu proyecto..." required>{{ old('mensaje') }}</textarea>
+            <textarea id="mensaje" name="mensaje" rows="6" maxlength="1500" placeholder="Cuéntame sobre tu proyecto..." required>{{ old('mensaje') }}</textarea>
             @error('mensaje') <span class="form-error">{{ $message }}</span> @enderror
           </div>
           @if(config('services.recaptcha.site_key'))
@@ -43,6 +62,8 @@
               @error('recaptcha') <span class="form-error">{{ $message }}</span> @enderror
             </div>
           @endif
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="honeypot">
+          <p class="recaptcha-notice">Este formulario está protegido con reCAPTCHA v3. Aplican la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política de Privacidad</a> y los <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Términos de Google</a>.</p>
           <button type="submit" class="btn btn-primary btn-full">Enviar mensaje →</button>
         </form>
         <div class="contact-links">
@@ -74,6 +95,9 @@
           document.getElementById('recaptcha-token-contact').value = token;
           event.target.submit();
         }));
+      });
+      document.getElementById('phone_country_iso')?.addEventListener('change', function () {
+        document.getElementById('phone_country_code').value = this.selectedOptions[0].dataset.code;
       });
     </script>
   @endpush

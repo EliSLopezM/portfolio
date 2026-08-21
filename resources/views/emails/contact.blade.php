@@ -16,6 +16,7 @@
             <td style="padding:28px;">
                 <p style="margin:0 0 14px;"><strong>Nombre:</strong> {{ $data['nombre'] ?? '' }}</p>
                 <p style="margin:0 0 14px;"><strong>Email:</strong> {{ $data['email'] ?? '' }}</p>
+                <p style="margin:0 0 14px;"><strong>Teléfono:</strong> {{ ($data['phone_country_code'] ?? '') . ' ' . ($data['phone_number'] ?? '') }}</p>
                 <p style="margin:0 0 14px;"><strong>Asunto:</strong> {{ $data['asunto'] ?? 'Sin asunto' }}</p>
                 <p style="margin:0 0 6px;"><strong>Mensaje:</strong></p>
                 <p style="margin:0; white-space:pre-wrap; line-height:1.6;">{{ $data['mensaje'] ?? '' }}</p>
