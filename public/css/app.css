@@ -192,6 +192,15 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .country-option { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 0.55rem 0.65rem; color: var(--text); background: transparent; border: 0; border-radius: 2px; font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
 .country-option:hover, .country-option[aria-selected="true"] { color: var(--accent); background: var(--accent-dim); }
 .country-flag { flex: 0 0 auto; width: 1.45rem; height: 1rem; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,0.2); pointer-events: none; }
+.country-flag.fi { display: inline-block; background-size: cover; background-position: center; }
+.country-flag.fi-co { background-image: url('https://flagcdn.com/w40/co.png'); }
+.country-flag.fi-pr { background-image: url('https://flagcdn.com/w40/pr.png'); }
+.country-flag.fi-us { background-image: url('https://flagcdn.com/w40/us.png'); }
+.country-flag.fi-mx { background-image: url('https://flagcdn.com/w40/mx.png'); }
+.country-flag.fi-es { background-image: url('https://flagcdn.com/w40/es.png'); }
+.country-flag.fi-ar { background-image: url('https://flagcdn.com/w40/ar.png'); }
+.country-flag.fi-cl { background-image: url('https://flagcdn.com/w40/cl.png'); }
+.country-flag.fi-pe { background-image: url('https://flagcdn.com/w40/pe.png'); }
 .form-help, .recaptcha-notice { font-size: 11px; color: var(--text3); }
 .recaptcha-notice { line-height: 1.5; margin-top: -0.25rem; }
 .recaptcha-notice a { color: var(--accent); }
@@ -268,8 +277,8 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .email-modal-direct strong { color: var(--accent); }
 
 /* ── CURSOR ── */
-.cursor-dot { width: 8px; height: 8px; display: block; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, background 0.2s; mix-blend-mode: difference; }
-.cursor-ring { width: 32px; height: 32px; display: block; border: 1.5px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: left 0.08s ease, top 0.08s ease, width 0.2s, height 0.2s, border-color 0.2s; opacity: 0.85; mix-blend-mode: difference; }
+.cursor-dot { width: 8px; height: 8px; display: block; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, background 0.2s; }
+.cursor-ring { width: 32px; height: 32px; display: block; border: 1.5px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: left 0.08s ease, top 0.08s ease, width 0.2s, height 0.2s, border-color 0.2s; opacity: 0.85; }
 .cursor-ring.hover { width: 48px; height: 48px; border-color: var(--accent2); opacity: 1; }
 
 /* ── RESPONSIVE ── */
