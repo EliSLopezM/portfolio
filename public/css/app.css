@@ -3,7 +3,8 @@
    Paleta: oscuro + amarillo dorado + claro
    ══════════════════════════════════════ */
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body.has-custom-cursor, body.has-custom-cursor * { cursor: none !important; }
 
 :root {
   --bg:      #0a0c0d;
@@ -267,8 +268,8 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .email-modal-direct strong { color: var(--accent); }
 
 /* ── CURSOR ── */
-.cursor-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, background 0.2s; }
-.cursor-ring { width: 32px; height: 32px; border: 1.5px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: left 0.08s ease, top 0.08s ease, width 0.2s, height 0.2s, border-color 0.2s; opacity: 0.6; }
+.cursor-dot { width: 8px; height: 8px; display: block; background: var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, background 0.2s; mix-blend-mode: difference; }
+.cursor-ring { width: 32px; height: 32px; display: block; border: 1.5px solid var(--accent); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: left 0.08s ease, top 0.08s ease, width 0.2s, height 0.2s, border-color 0.2s; opacity: 0.85; mix-blend-mode: difference; }
 .cursor-ring.hover { width: 48px; height: 48px; border-color: var(--accent2); opacity: 1; }
 
 /* ── RESPONSIVE ── */
