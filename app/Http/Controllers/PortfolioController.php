@@ -40,9 +40,9 @@ class PortfolioController extends Controller
             'nombre'  => 'required|string|max:100',
             'email'   => 'required|email|max:150',
             'asunto'  => 'nullable|string|max:200',
-            'phone_country_iso' => 'nullable|string|size:2|alpha|uppercase',
-            'phone_country_code' => 'nullable|string|regex:/^\+[1-9][0-9]{0,3}$/',
-            'phone_number' => 'nullable|string|regex:/^[0-9 ()-]{7,20}$/',
+            'phone_country_iso' => 'required|string|size:2|alpha|uppercase',
+            'phone_country_code' => 'required|string|regex:/^\+[1-9][0-9]{0,3}$/',
+            'phone_number' => 'required|string|regex:/^[0-9 ()-]{7,20}$/',
             'mensaje' => 'required|string|max:1500',
             'website' => 'nullable|size:0',
         ]);

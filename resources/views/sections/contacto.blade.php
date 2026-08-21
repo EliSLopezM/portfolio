@@ -68,17 +68,20 @@
         </div>
 
         <div class="form-group">
-          <label for="phone_number_home">TELÉFONO (OPCIONAL)</label>
+          <label for="phone_number_home">TELÉFONO *</label>
           <div class="phone-fields">
-            <select id="phone_country_iso_home" name="phone_country_iso" aria-label="País del teléfono">
-              <option value="CO" data-code="+57" @selected(old('phone_country_iso', 'CO') === 'CO')>🇨🇴 +57 Colombia</option>
-              <option value="PR" data-code="+1" @selected(old('phone_country_iso') === 'PR')>🇵🇷 +1 Puerto Rico</option>
-              <option value="US" data-code="+1" @selected(old('phone_country_iso') === 'US')>🇺🇸 +1 Estados Unidos</option>
-              <option value="MX" data-code="+52" @selected(old('phone_country_iso') === 'MX')>🇲🇽 +52 México</option>
-              <option value="ES" data-code="+34" @selected(old('phone_country_iso') === 'ES')>🇪🇸 +34 España</option>
-            </select>
-            <input type="hidden" id="phone_country_code_home" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}">
-            <input id="phone_number_home" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}">
+            <div class="country-select">
+              <span class="fi fi-co country-flag" id="country-flag-home" aria-hidden="true"></span>
+              <select id="phone_country_iso_home" name="phone_country_iso" aria-label="País del teléfono" required>
+                <option value="CO" data-code="+57" @selected(old('phone_country_iso', 'CO') === 'CO')>+57 Colombia</option>
+                <option value="PR" data-code="+1" @selected(old('phone_country_iso') === 'PR')>+1 Puerto Rico</option>
+                <option value="US" data-code="+1" @selected(old('phone_country_iso') === 'US')>+1 Estados Unidos</option>
+                <option value="MX" data-code="+52" @selected(old('phone_country_iso') === 'MX')>+52 México</option>
+                <option value="ES" data-code="+34" @selected(old('phone_country_iso') === 'ES')>+34 España</option>
+              </select>
+            </div>
+            <input type="hidden" id="phone_country_code_home" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}" required>
+            <input id="phone_number_home" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}" required>
           </div>
         </div>
 
@@ -141,6 +144,7 @@
       });
       document.getElementById('phone_country_iso_home')?.addEventListener('change', function () {
         document.getElementById('phone_country_code_home').value = this.selectedOptions[0].dataset.code;
+        document.getElementById('country-flag-home').className = `fi fi-${this.value.toLowerCase()} country-flag`;
       });
     </script>
   @endpush
