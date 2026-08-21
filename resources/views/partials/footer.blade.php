@@ -1,5 +1,5 @@
 <footer class="footer">
-  <p class="footer-text">© {{ date('Y') }} {{ config('portfolio.name') }} — Bogotá, Colombia</p>
+  <p class="footer-text">© {{ date('Y') }} {{ config('portfolio.name') }} — Todos los derechos reservados · Bogotá, Colombia</p>
   <div class="footer-links">
     <a href="{{ config('portfolio.github') }}" target="_blank" rel="noopener" class="footer-link">GitHub ↗</a>
     <a href="{{ config('portfolio.linkedin') }}" target="_blank" rel="noopener" class="footer-link">LinkedIn ↗</a>

@@ -8,12 +8,35 @@
 
   <title>@yield('title', $portfolio['name'] . ' — ' . $portfolio['role'])</title>
   <meta name="description" content="@yield('description', $portfolio['tagline'])">
+  <meta name="author" content="{{ $portfolio['name'] }}">
+  <meta name="theme-color" content="#0a0c0d">
+  <link rel="canonical" href="{{ url()->current() }}">
 
   {{-- Open Graph --}}
   <meta property="og:title" content="@yield('title', $portfolio['name'])">
   <meta property="og:description" content="@yield('description', $portfolio['tagline'])">
   <meta property="og:image" content="{{ asset('images/elilogo.png') }}">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:locale" content="es_CO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="@yield('title', $portfolio['name'])">
+  <meta name="twitter:description" content="@yield('description', $portfolio['tagline'])">
+  <meta name="twitter:image" content="{{ asset('images/elilogo.png') }}">
+
+  @php
+    $structuredData = [
+      '@context' => 'https://schema.org',
+      '@type' => 'Person',
+      'name' => $portfolio['name'],
+      'jobTitle' => $portfolio['role'],
+      'email' => 'mailto:' . $portfolio['email'],
+      'url' => config('app.url'),
+      'sameAs' => [$portfolio['github'], $portfolio['linkedin']],
+      'address' => ['@type' => 'PostalAddress', 'addressLocality' => 'Bogota', 'addressCountry' => 'CO'],
+    ];
+  @endphp
+  <script type="application/ld+json">{!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
   {{-- Favicon --}}
   <link rel="icon" type="image/png" href="{{ asset('elilogo.png') }}">

@@ -1,8 +1,7 @@
 # 🗂️ Portfolio — Eli Santiago López
 **eslopez.dev@gmail.com · github.com/EliSLopezM**
 
-Portafolio personal construido con **Laravel 10** + Blade, CSS vanilla y JS vanilla.
-Sin dependencias de frontend pesadas — todo en menos de 100 KB.
+Portafolio profesional de **Eli Santiago López Mahecha**, Ingeniero de Sistemas y Full Stack Developer en Bogotá, Colombia. Construido con Laravel 12, Blade, CSS vanilla y JavaScript vanilla para una experiencia rápida, accesible y responsive.
 
 ---
 
@@ -46,7 +45,6 @@ portfolio-eli/
 ## 🚀 Instalación local
 
 ```bash
-# 1. Clona o copia el proyecto en tu Laravel existente
 git clone https://github.com/EliSLopezM/portfolio.git
 cd portfolio
 
@@ -57,13 +55,9 @@ composer install
 cp .env.example .env
 php artisan key:generate
 
-# 4. Configura tu .env (no necesita base de datos)
-# Solo necesitas configurar mail si quieres el formulario de contacto:
-# MAIL_MAILER=smtp
-# MAIL_HOST=smtp.gmail.com
-# MAIL_PORT=587
-# MAIL_USERNAME=eslopez.dev@gmail.com
-# MAIL_PASSWORD=tu_app_password
+# 4. Instala y compila los assets
+npm install
+npm run build
 
 # 5. Inicia el servidor
 php artisan serve
@@ -92,7 +86,30 @@ archivo para cambiar nombre, proyectos, stack, experiencia, etc.
 
 ---
 
-## 🌐 Deploy en Railway (gratis, PHP/Laravel soportado)
+## Configuracion del formulario
+
+Copia `.env.example` a `.env` y configura SMTP y reCAPTCHA v3:
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=eslopez.dev@gmail.com
+MAIL_PASSWORD=tu_app_password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=eslopez.dev@gmail.com
+MAIL_FROM_NAME="Eli Santiago Lopez"
+RECAPTCHA_SITE_KEY=tu_clave_publica_v3
+RECAPTCHA_SECRET_KEY=tu_clave_privada_v3
+```
+
+Los mensajes se guardan en la base de datos y se notifican a `eslopez.dev@gmail.com`. reCAPTCHA v3 valida la accion `contact` con puntuacion minima de `0.5`; el endpoint admite seis envios por minuto por cliente.
+
+## SEO y responsive
+
+El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Person`, sitemap en `/sitemap.xml` y `robots.txt`. La navegacion, formularios, tarjetas y botones se adaptan a pantallas pequenas.
+
+## Deploy en Railway (PHP/Laravel soportado)
 
 > Railway es la mejor opción gratis para Laravel. Vercel no ejecuta PHP.
 
@@ -116,10 +133,11 @@ archivo para cambiar nombre, proyectos, stack, experiencia, etc.
 
 ## 📦 Requisitos
 
-- PHP 8.1+
-- Composer
-- Laravel 10.x
-- No necesita base de datos
+- PHP 8.2+
+- Composer 2+
+- Node.js 20+ y npm
+- Laravel 12.x
+- MySQL o SQLite
 
 ---
 
