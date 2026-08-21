@@ -101,9 +101,17 @@ MAIL_FROM_ADDRESS=eslopez.dev@gmail.com
 MAIL_FROM_NAME="Eli Santiago Lopez"
 RECAPTCHA_SITE_KEY=tu_clave_publica_v3
 RECAPTCHA_SECRET_KEY=tu_clave_privada_v3
+WHATSAPP_ACCESS_TOKEN=token_privado_de_meta
+WHATSAPP_PHONE_NUMBER_ID=id_del_numero_de_meta
+WHATSAPP_API_VERSION=v23.0
+WHATSAPP_TEMPLATE=portfolio_new_contact
+WHATSAPP_TEMPLATE_LANGUAGE=es_CO
+WHATSAPP_ALERT_TO=573001234567
 ```
 
 Los mensajes se guardan en la base de datos y se notifican a `eslopez.dev@gmail.com`. reCAPTCHA v3 valida la accion `contact` con puntuacion minima de `0.5`; el endpoint admite seis envios por minuto por cliente.
+
+El aviso de WhatsApp usa la **WhatsApp Cloud API** y una plantilla transaccional aprobada por Meta llamada `portfolio_new_contact`, con tres variables en el cuerpo: nombre, email y teléfono. Crea la plantilla en Meta Business con un texto como `Nuevo mensaje en tu correo. Posible cliente: {{1}} | {{2}} | {{3}}. Revisa tu bandeja de entrada.` y coloca las credenciales directamente en `.env`. Nunca las subas a Git.
 
 ## SEO y responsive
 

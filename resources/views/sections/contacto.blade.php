@@ -86,7 +86,7 @@
               </div>
             </div>
             <input type="hidden" id="phone_country_code_home" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}" required>
-            <input id="phone_number_home" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}" required>
+            <input id="phone_number_home" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="300 123 4567" value="{{ old('phone_number') }}" required>
           </div>
         </div>
 

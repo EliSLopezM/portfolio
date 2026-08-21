@@ -80,6 +80,47 @@ class PortfolioController extends Controller
             Log::error('Error enviando correo de contacto: ' . $e->getMessage());
         }
 
+        $this->notifyWhatsApp($validated);
+
         return back()->with('success', '¡Mensaje enviado! Te responderé pronto.');
+    }
+
+    private function notifyWhatsApp(array $data): void
+    {
+        $whatsapp = config('services.whatsapp');
+        if (empty($whatsapp['access_token']) || empty($whatsapp['phone_number_id']) || empty($whatsapp['alert_to'])) {
+            return;
+        }
+
+        try {
+            $response = Http::withToken($whatsapp['access_token'])
+                ->timeout(8)
+                ->post("https://graph.facebook.com/{$whatsapp['api_version']}/{$whatsapp['phone_number_id']}/messages", [
+                    'messaging_product' => 'whatsapp',
+                    'to' => $whatsapp['alert_to'],
+                    'type' => 'template',
+                    'template' => [
+                        'name' => $whatsapp['template'],
+                        'language' => ['code' => $whatsapp['language']],
+                        'components' => [[
+                            'type' => 'body',
+                            'parameters' => [
+                                ['type' => 'text', 'text' => $data['nombre']],
+                                ['type' => 'text', 'text' => $data['email']],
+                                ['type' => 'text', 'text' => trim(($data['phone_country_code'] ?? '') . ' ' . ($data['phone_number'] ?? ''))],
+                            ],
+                        ]],
+                    ],
+                ]);
+
+            if (! $response->successful()) {
+                Log::warning('WhatsApp no pudo enviar el aviso de contacto.', [
+                    'status' => $response->status(),
+                    'error' => $response->json('error.message'),
+                ]);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Error enviando aviso de WhatsApp.', ['error' => $e->getMessage()]);
+        }
     }
 }

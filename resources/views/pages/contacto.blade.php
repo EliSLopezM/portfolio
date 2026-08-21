@@ -54,7 +54,7 @@
                 </div>
               </div>
               <input type="hidden" id="phone_country_code" name="phone_country_code" value="{{ old('phone_country_code', '+57') }}" required>
-              <input id="phone_number" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="301 425 5344" value="{{ old('phone_number') }}" aria-describedby="phone-help" required>
+              <input id="phone_number" name="phone_number" type="tel" inputmode="tel" maxlength="20" pattern="[0-9 ()-]{7,20}" placeholder="300 123 4567" value="{{ old('phone_number') }}" aria-describedby="phone-help" required>
             </div>
             <small id="phone-help" class="form-help">Incluye solo números, espacios, paréntesis o guiones.</small>
             @error('phone_number') <span class="form-error">{{ $message }}</span> @enderror

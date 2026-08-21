@@ -40,4 +40,13 @@ return [
         'secret_key' => env('RECAPTCHA_SECRET_KEY'),
     ],
 
+    'whatsapp' => [
+        'access_token' => env('WHATSAPP_ACCESS_TOKEN'),
+        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
+        'api_version' => env('WHATSAPP_API_VERSION', 'v23.0'),
+        'template' => env('WHATSAPP_TEMPLATE', 'portfolio_new_contact'),
+        'language' => env('WHATSAPP_TEMPLATE_LANGUAGE', 'es_CO'),
+        'alert_to' => env('WHATSAPP_ALERT_TO'),
+    ],
+
 ];
