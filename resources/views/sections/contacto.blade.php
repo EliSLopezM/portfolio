@@ -76,6 +76,15 @@
           @enderror
         </div>
 
+        @if(config('services.recaptcha.site_key'))
+          <div class="form-group {{ $errors->has('recaptcha') ? 'has-error' : '' }}">
+            <input type="hidden" name="g-recaptcha-response" id="recaptcha-token-home">
+            @error('recaptcha')
+              <span class="form-error">{{ $message }}</span>
+            @enderror
+          </div>
+        @endif
+
         <button type="submit" class="btn btn-primary btn-full">
           Enviar mensaje →
         </button>
@@ -98,3 +107,17 @@
     </div>
   </div>
 </section>
+@if(config('services.recaptcha.site_key'))
+  @push('scripts')
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" async defer></script>
+    <script>
+      document.querySelector('.contact-form')?.addEventListener('submit', function (event) {
+        event.preventDefault();
+        grecaptcha.ready(() => grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' }).then((token) => {
+          document.getElementById('recaptcha-token-home').value = token;
+          event.target.submit();
+        }));
+      });
+    </script>
+  @endpush
+@endif
