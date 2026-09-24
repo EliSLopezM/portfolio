@@ -46,8 +46,21 @@ return [
             'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" width="36" height="36">',
         ],
         [
+            'name' => 'Flutter',
+            'type' => 'Desarrollo de aplicaciones multiplataforma',
+            'category' => 'frontend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'Dart',
+            'type' => 'Lenguaje para aplicaciones multiplataforma',
+            'category' => 'frontend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg" width="36" height="36">',
+        ],
+        [
             'name' => 'Python',
             'type' => 'Scripting de seguridad & automatización',
+            'level' => 'conocimiento',
             'category' => 'ciberseguridad',
             'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="36" height="36">',
         ],
@@ -106,6 +119,12 @@ return [
             'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" width="36" height="36">',
         ],
         [
+            'name' => 'Nginx',
+            'type' => 'Servidor web & despliegue',
+            'category' => 'backend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" width="36" height="36">',
+        ],
+        [
             'name' => 'REST APIs',
             'type' => 'Diseño e integración',
             'category' => 'backend',
@@ -121,9 +140,15 @@ return [
         [
             'name' => 'WordPress',
             'type' => 'CMS & desarrollo web',
-            'level' => 'conocimiento',
             'category' => 'frontend',
             'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" width="36" height="36">',
+        ],
+        [
+            'name' => 'GoLand',
+            'type' => 'IDE para desarrollo con Go',
+            'level' => 'conocimiento',
+            'category' => 'backend',
+            'svg'  => '<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/goland/goland-original.svg" width="36" height="36">',
         ],
         [
             'name' => 'Java',
@@ -149,6 +174,7 @@ return [
         [
             'name' => 'SQL Server',
             'type' => 'Base de datos relacional',
+            'level' => 'conocimiento',
             'category' => 'backend',
             'svg'  => '<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNiAzNiI+PGVsbGlwc2UgY3g9IjE4IiBjeT0iOCIgcng9IjE0IiByeT0iNSIgZmlsbD0iI0NDMjkyNyIvPjxwYXRoIGQ9Ik00IDh2MjBjMCAyLjggNi4zIDUgMTQgNXMxNC0yLjIgMTQtNVY4IiBzdHJva2U9IiNDQzI5MjciIHN0cm9rZS13aWR0aD0iMi40IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTQgMTZjMCAyLjggNi4zIDUgMTQgNXMxNC0yLjIgMTQtNSIgc3Ryb2tlPSIjQ0MyOTI3IiBzdHJva2Utd2lkdGg9IjIuNCIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik00IDI0YzAgMi44IDYuMyA1IDE0IDVzMTQtMi4yIDE0LTUiIHN0cm9rZT0iI0NDMjkyNyIgc3Ryb2tlLXdpZHRoPSIyLjQiIGZpbGw9Im5vbmUiLz48L3N2Zz4=" width="36" height="36">',
         ],
@@ -221,7 +247,7 @@ return [
             'company' => 'Steps Consulting Corp',
             'url'     => 'https://elso.club',
             'github'  => null,
-            'image'   => 'elso-club.jpg',
+            'image'   => 'elso.png',
             'tags'    => ['WordPress', 'LearnDash', 'BuddyBoss', 'PHP', 'MySQL'],
             'desc'    => 'Plataforma de estudios en línea enfocada en cursos de salud, construida sobre WordPress con LearnDash como LMS y el theme BuddyBoss para la capa de red social: perfiles, grupos y actividad entre estudiantes.',
             'links'   => [
@@ -233,7 +259,7 @@ return [
             'company' => 'Steps Puerto Rico Corp',
             'url'     => 'https://stepspuertoricocorp.com',
             'github'  => null,
-            'image'   => 'stepspuertoricocorp.jpg',
+            'image'   => 'stepspuertoricocorp.png',
             'tags'    => ['Laravel', 'Microsoft Graph API', 'Outlook', 'PHP', 'MySQL'],
             'desc'    => 'Sitio de presentación corporativa para Steps Puerto Rico Corp, empresa tecnológica, con incorporación de una API para la gestión de mensajes de correo de Outlook.',
             'links'   => [

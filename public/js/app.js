@@ -263,6 +263,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 })();
+
+/* â”€â”€ STACK FILTERS â”€â”€ */
+(function () {
+  const filters = document.querySelectorAll('[data-stack-filter]');
+  const cards = document.querySelectorAll('.stack-card[data-level]');
+  if (!filters.length || !cards.length) return;
+
+  filters.forEach(function (filter) {
+    filter.addEventListener('click', function () {
+      const selected = filter.dataset.stackFilter;
+      filters.forEach(function (button) {
+        button.classList.toggle('active', button === filter);
+      });
+      cards.forEach(function (card) {
+        const matches = selected === 'all' || card.dataset.level === selected;
+        card.classList.toggle('stack-filtered-out', !matches);
+      });
+    });
+  });
+})();
 /* ── CERT MODAL ── */
 function openCertModal(card) {
     var modal  = document.getElementById('certModal');
