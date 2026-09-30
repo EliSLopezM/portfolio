@@ -1,0 +1,15 @@
+/* Me gusta, compartir y video de los blogs. Usa las variables de cada sitio (portafolio / DCC). */
+.post-engage{max-width:760px;margin:3rem auto 0;padding-top:1.5rem;border-top:1px solid var(--border,rgba(128,128,128,.25))}
+.post-engage-stats{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.pe-like,.pe-btn{display:inline-flex;align-items:center;gap:.5rem;font:500 .8rem var(--mono,ui-monospace,monospace);padding:.55rem 1rem;border-radius:var(--radius,6px);border:1px solid var(--accent-border,var(--dcc-orange,#E8700A));background:transparent;color:inherit;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+.pe-like:hover,.pe-btn:hover{transform:translateY(-2px);background:var(--accent-dim,rgba(232,112,10,.12))}
+.pe-like.is-liked{background:var(--accent,var(--dcc-orange,#E8700A));color:#000;border-color:transparent}
+.pe-views{font:.8rem var(--mono,monospace);opacity:.7}.pe-title{font:.7rem var(--mono,monospace);letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:.75rem}
+.pe-links{display:flex;gap:.6rem;flex-wrap:wrap}.pe-btn[hidden]{display:none}
+.post-video{max-width:760px;margin:2rem auto;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000}.post-video iframe,.post-video video{width:100%;height:100%;border:0;display:block}
+.blog-post-content img,.dcc-post-content img{max-width:100%;height:auto;border-radius:8px;margin:1rem 0}
+.blog-post-content table,.dcc-post-content table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.92rem;display:block;overflow-x:auto}
+.blog-post-content th,.blog-post-content td,.dcc-post-content th,.dcc-post-content td{border:1px solid rgba(128,128,128,.35);padding:.5rem .75rem;text-align:left}
+.blog-post-content th,.dcc-post-content th{background:rgba(128,128,128,.12)}
+.blog-post-content h2,.blog-post-content h3{margin:2rem 0 .75rem;color:var(--text,inherit)}.blog-post-content ul,.blog-post-content ol{margin:0 0 1.5rem 1.4rem}
+.blog-post-content blockquote{border-left:3px solid var(--accent,#f0c040);padding-left:1rem;margin:1.5rem 0;font-style:italic}

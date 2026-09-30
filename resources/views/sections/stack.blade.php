@@ -11,11 +11,7 @@
         </div>
 
         @php
-            $stackGroups = [
-                'backend'        => ['label' => 'Backend', 'sub' => 'Donde más disfruto trabajar — mi área más fuerte.', 'featured' => true],
-                'frontend'       => ['label' => 'Frontend', 'sub' => 'Interfaces y experiencia de usuario.', 'featured' => false],
-                'ciberseguridad' => ['label' => 'Ciberseguridad', 'sub' => 'Gestión de identidad, scripting de seguridad e infraestructura.', 'featured' => false],
-            ];
+            $stackGroups = collect($portfolio['stack_categories'])->keyBy('slug');
             $stackByCategory = collect($portfolio['stack'])->groupBy(fn ($tech) => $tech['category'] ?? 'backend');
         @endphp
 
@@ -44,7 +40,7 @@
                                 </div>
                                 <span class="stack-name">{{ $tech['name'] }}</span>
                                 @if(isset($tech['level']))
-                                    <span class="stack-badge">Conocimiento</span>
+                                    <span class="stack-badge">En estudio</span>
                                 @endif
                             </div>
 
@@ -55,7 +51,7 @@
                                 </div>
                                 <span class="stack-name-back">{{ $tech['name'] }}</span>
                                 @if(isset($tech['level']))
-                                    <span class="stack-level">Conocimiento</span>
+                                    <span class="stack-level">En estudio</span>
                                 @else
                                     <span class="stack-level">Dominio</span>
                                 @endif

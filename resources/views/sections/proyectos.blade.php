@@ -10,9 +10,9 @@
       <article class="project-card">
 
         <div class="project-img-wrap">
-          @if(file_exists(public_path('images/' . $project['image'])))
+          @if(!empty($project['image_url']))
             <img
-              src="{{ asset('images/' . $project['image']) }}"
+              src="{{ $project['image_url'] }}"
               alt="Captura de {{ $project['title'] }}"
               class="project-img"
               loading="lazy"
@@ -23,7 +23,7 @@
             </div>
           @endif
           <div class="project-overlay">
-            @foreach($project['links'] as $link)
+            @foreach($project['links'] ?? [] as $link)
               @if($link['featured'])
                 <a href="{{ $link['url'] }}" target="_blank" rel="noopener" class="overlay-btn">
                   {{ $link['label'] }} ↗
@@ -39,7 +39,7 @@
           </div>
 
           <div class="project-tags">
-            @foreach($project['tags'] as $tag)
+            @foreach($project['tags'] ?? [] as $tag)
               <span class="tag">{{ $tag }}</span>
             @endforeach
           </div>
@@ -48,7 +48,7 @@
           <p class="project-desc">{{ $project['desc'] }}</p>
 
           <div class="project-links">
-            @foreach($project['links'] as $link)
+            @foreach($project['links'] ?? [] as $link)
               <a
                 href="{{ $link['url'] }}"
                 target="_blank"
@@ -58,7 +58,7 @@
                 {{ $link['label'] }} ↗
               </a>
             @endforeach
-            @if($project['github'])
+            @if(!empty($project['github']))
               <a href="{{ $project['github'] }}" target="_blank" rel="noopener" class="project-link">
                 GitHub →
               </a>

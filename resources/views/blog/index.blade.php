@@ -17,7 +17,7 @@
             <article class="blog-card">
                 @if($post->cover_image)
                 <div class="blog-card-img-wrap">
-                    <img src="{{ asset('images/blog/' . $post->cover_image) }}" alt="{{ $post->title }}" class="blog-card-img" loading="lazy">
+                    <img src="{{ $post->coverUrl() }}" alt="{{ $post->title }}" class="blog-card-img" loading="lazy">
                 </div>
                 @else
                 <div class="blog-card-img-placeholder">

@@ -5,18 +5,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@yield('title', 'Defensa Civil — Eli Santiago López')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="@yield('description', 'Voluntario Defensa Civil Colombiana — Comité Villa Suaita, Bosa')">
+    @hasSection('keywords')<meta name="keywords" content="@yield('keywords')">@endif
+    <link rel="canonical" href="@yield('canonical', url()->current())">
 
     {{-- OG --}}
     <meta property="og:title" content="@yield('title', 'Defensa Civil — Eli Santiago')">
     <meta property="og:description" content="@yield('description', 'Voluntario DCC Comité Villa Suaita')">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="@yield('canonical', url()->current())">
+    <meta property="og:locale" content="es_CO">
+    <meta property="og:image" content="@yield('og_image', asset('images/elilogo.png'))">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'Defensa Civil — Eli Santiago')">
+    <meta name="twitter:description" content="@yield('description', 'Voluntario DCC Comité Villa Suaita')">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/elilogo.png'))">
 
     <link rel="icon" type="image/png" href="{{ asset('elilogo.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dcc.css') }}">
+    @stack('head')
 </head>
 
 <body class="dcc-body">
@@ -118,6 +129,7 @@
     @include('partials.footer')
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/dcc.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

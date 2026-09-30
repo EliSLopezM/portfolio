@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ContactMail;
+use App\Models\Message;
+use App\Services\PortfolioContent;
+use App\Services\RecaptchaVerifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +15,7 @@ class PortfolioController extends Controller
 {
     private function data(): array
     {
-        return config("portfolio");
+        return PortfolioContent::get();
     }
     public function index()
     {
@@ -34,7 +37,7 @@ class PortfolioController extends Controller
     {
         return view("pages.contacto",   ["portfolio" => $this->data()]);
     }
-    public function contact(Request $request)
+    public function contact(Request $request, RecaptchaVerifier $recaptcha)
     {
         $validated = $request->validate([
             'nombre'  => 'required|string|max:100',
@@ -48,30 +51,20 @@ class PortfolioController extends Controller
         ]);
 
         // Verificación reCAPTCHA — solo se activa si hay secret key configurada.
-        $recaptchaSecret = config('services.recaptcha.secret_key');
-        if ($recaptchaSecret) {
-            if (! $request->filled('g-recaptcha-response')) {
-                return back()->withErrors(['recaptcha' => 'No pudimos verificar el reCAPTCHA. Inténtalo de nuevo.'])->withInput();
-            }
+        $score = null;
+        if ($recaptcha->configured()) {
+            $result = $recaptcha->verify($request->input('g-recaptcha-response'), 'contact', $request->ip());
 
-            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                'secret'   => $recaptchaSecret,
-                'response' => $request->input('g-recaptcha-response'),
-                'remoteip' => $request->ip(),
-            ]);
-
-            if (! $response->ok()
-                || ! $response->json('success')
-                || $response->json('action') !== 'contact'
-                || (float) $response->json('score', 0) < 0.5) {
+            if (! $result['ok']) {
                 return back()
                     ->withErrors(['recaptcha' => 'No pudimos verificar el reCAPTCHA. Inténtalo de nuevo.'])
                     ->withInput();
             }
+            $score = $result['score'];
         }
 
         unset($validated['website']);
-        \App\Models\Message::create($validated);
+        Message::create($validated + ['ip' => $request->ip(), 'recaptcha_score' => $score, 'statuses' => []]);
 
         try {
             Mail::to(config('portfolio.email'))->send(new ContactMail($validated));
