@@ -175,4 +175,21 @@ class LoginSecurityTest extends TestCase
 
         $this->assertTrue(Message::first()->isUnread());
     }
+
+    public function test_local_recaptcha_bypass_works_only_in_local_environment(): void
+    {
+        $this->admin();
+        config(['services.recaptcha.secret_key' => 'secret', 'services.recaptcha.bypass_local' => true]);
+        Http::fake(fn () => Http::response(['success' => false]));
+
+        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class);
+        $this->app['env'] = 'local';
+        $this->attempt()->assertRedirect('/admin');
+        auth()->logout();
+
+        $this->app['env'] = 'production';
+        $this->withoutMiddleware(ValidateCsrfToken::class)
+            ->attempt()->assertSessionHasErrors('username');
+        $this->assertGuest();
+    }
 }

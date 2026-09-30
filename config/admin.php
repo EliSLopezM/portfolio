@@ -30,6 +30,4 @@ return [
         'develop' => ['Laravel' => 'Laravel', 'PHP' => 'PHP', 'IA aplicada' => 'IA aplicada', 'Seguridad' => 'Seguridad', 'General' => 'General'],
     ],
 
-    // Disco donde se guardan las subidas (carpeta pública). Usa "s3" si el hosting tiene disco efímero.
-    'uploads_disk' => env('UPLOADS_DISK', 'uploads'),
 ];

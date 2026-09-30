@@ -29,20 +29,22 @@
           <button type="button" data-cmd="bold"><b>B</b></button><button type="button" data-cmd="italic"><i>I</i></button>
           <button type="button" data-cmd="ul">• Lista</button><button type="button" data-cmd="ol">1. Lista</button><button type="button" data-cmd="quote">“ Cita</button>
           <button type="button" data-cmd="link">Enlace</button><button type="button" data-cmd="image">🖼 Imagen</button><button type="button" data-cmd="table">▦ Tabla</button><button type="button" data-cmd="clear">Limpiar</button>
+          <label for="imgSize" class="sr-only" style="margin:0 0 0 .5rem">Tamaño de imagen</label>
+          <select id="imgSize" title="Tamaño de la imagen seleccionada (haz clic en una imagen del texto para cambiarla)" style="width:auto;padding:.3rem .5rem;font-size:.8rem">
+            <option value="400">Imagen pequeña · 400 px</option><option value="700" selected>Mediana · 700 px</option><option value="1000">Grande · 1000 px</option><option value="">Ancho completo</option>
+          </select>
         </div>
         <div id="editorArea" class="editor-area" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Contenido del blog"></div>
         <textarea id="contentField" name="content" hidden>{{ old('content', $post->getRawOriginal('content') ? (string) $post->renderedContent() : '') }}</textarea>
         <input type="file" id="inlineImage" hidden accept="image/jpeg,image/png,image/webp,image/gif" data-url="{{ route("admin.$area.posts.image") }}">
-        <p class="hint">El contenido se sanitiza al guardar: solo se conservan títulos, listas, enlaces, imágenes y tablas.</p>
+        <p class="hint">Imágenes del texto: se reducen a máx. {{ config('images.presets.blog_inline.w') }} px de ancho al subir. Haz clic en una imagen y cambia «Tamaño» para achicarla o ampliarla. El contenido se sanitiza al guardar: solo se conservan títulos, listas, enlaces, imágenes y tablas.</p>
       </div>
 
       <div class="card">
         <h2>Video (opcional)</h2>
-        <div class="row">
-          <div class="field"><label for="video_url">Enlace de YouTube o Vimeo</label><input type="url" id="video_url" name="video_url" value="{{ old('video_url', $post->video_url) }}" placeholder="https://www.youtube.com/watch?v=…" maxlength="255"></div>
-          <div class="field"><label for="video">…o subir MP4/WebM (máx. 50 MB)</label><input type="file" id="video" name="video" accept="video/mp4,video/webm">
-            @if($post->video_path)<label class="check" style="margin-top:.4rem"><input type="checkbox" name="remove_video" value="1"> Quitar video subido actual</label>@endif</div>
-        </div>
+        <div class="field"><label for="video_url">Enlace de YouTube o Vimeo</label><input type="url" id="video_url" name="video_url" value="{{ old('video_url', $post->video_url) }}" placeholder="https://www.youtube.com/watch?v=…" maxlength="255">
+          <p class="hint">Se muestra incrustado al final del artículo. Sube el video a YouTube/Vimeo (puede ser «no listado») y pega el enlace.</p></div>
+      </div>
       </div>
 
       <div class="card">
@@ -69,7 +71,7 @@
         <h2>Portada</h2>
         @if($post->coverUrl())<img src="{{ $post->coverUrl() }}" alt="Portada actual" style="width:100%;border-radius:6px;margin-bottom:.6rem">
           <label class="check" style="margin-bottom:.6rem"><input type="checkbox" name="remove_cover" value="1"> Quitar portada</label>@endif
-        <input type="file" name="cover" accept="image/jpeg,image/png,image/webp,image/gif"><p class="hint">Se usa también al compartir en redes (1200×630 recomendado).</p>
+        @include('admin.partials.img-input', ['name' => 'cover', 'preset' => 'blog_cover'])
       </div>
     </aside>
   </div>

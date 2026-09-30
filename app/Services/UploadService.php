@@ -2,37 +2,37 @@
 
 namespace App\Services;
 
+use App\Models\StoredFile;
 use App\Support\Media;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
+/** Guarda archivos subidos en la base de datos (tabla stored_files) y devuelve su referencia «uploads/{nombre}». */
 class UploadService
 {
-    public const IMAGE_RULES = ['image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120', 'dimensions:max_width=6000,max_height=6000'];
-
     public const PDF_RULES = ['file', 'mimes:pdf', 'mimetypes:application/pdf', 'max:10240'];
 
-    public const VIDEO_RULES = ['file', 'mimetypes:video/mp4,video/webm', 'max:51200'];
+    public function __construct(private ImageProcessor $images) {}
 
-    private function disk()
+    /** Reglas de validación de una imagen (el tamaño final lo define el preset). */
+    public static function imageRules(): array
     {
-        return Storage::disk(config('admin.uploads_disk'));
+        return ['image', 'mimes:jpg,jpeg,png,webp,gif', 'max:'.config('images.max_upload_kb'), 'dimensions:max_width=8000,max_height=8000'];
     }
 
-    /** Guarda con nombre aleatorio y extensión detectada por contenido (nunca la del cliente). */
-    public function store(UploadedFile $file, string $folder): string
+    public function storeImage(UploadedFile $file, string $preset): string
     {
-        $name = $file->hashName();
-        $extension = $file->guessExtension() ?: 'bin';
-        $name = pathinfo($name, PATHINFO_FILENAME).'.'.$extension;
+        $img = $this->images->process($file, $preset);
 
-        $this->disk()->putFileAs($folder, $file, $name);
-
-        return Media::UPLOAD_PREFIX.$folder.'/'.$name;
+        return $this->save($img['data'], $img['mime'], $img['ext'], $preset, $img['width'], $img['height']);
     }
 
-    /** Reemplaza un archivo anterior (si era una subida) por uno nuevo. */
-    public function replace(?UploadedFile $file, ?string $current, string $folder): ?string
+    public function storePdf(UploadedFile $file): string
+    {
+        return $this->save((string) file_get_contents($file->getRealPath()), 'application/pdf', 'pdf', 'pdf');
+    }
+
+    public function replaceImage(?UploadedFile $file, ?string $current, string $preset): ?string
     {
         if (! $file) {
             return $current;
@@ -40,15 +40,36 @@ class UploadService
 
         $this->delete($current);
 
-        return $this->store($file, $folder);
+        return $this->storeImage($file, $preset);
+    }
+
+    public function replacePdf(?UploadedFile $file, ?string $current): ?string
+    {
+        if (! $file) {
+            return $current;
+        }
+
+        $this->delete($current);
+
+        return $this->storePdf($file);
     }
 
     public function delete(?string $path): void
     {
-        if (! Media::isUpload($path) || str_contains($path, '..')) {
-            return;
+        if (Media::isUpload($path)) {
+            StoredFile::where('name', Media::fileName($path))->delete();
         }
+    }
 
-        $this->disk()->delete(substr($path, strlen(Media::UPLOAD_PREFIX)));
+    private function save(string $binary, string $mime, string $ext, string $folder, ?int $w = null, ?int $h = null): string
+    {
+        $name = Str::random(40).'.'.$ext;
+
+        StoredFile::create([
+            'name' => $name, 'folder' => $folder, 'mime' => $mime, 'size' => strlen($binary),
+            'width' => $w, 'height' => $h, 'data' => base64_encode($binary),
+        ]);
+
+        return Media::UPLOAD_PREFIX.$name;
     }
 }

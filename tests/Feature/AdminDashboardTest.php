@@ -3,16 +3,19 @@
 namespace Tests\Feature;
 
 use App\Models\CalendarEvent;
+use App\Models\Certificate;
 use App\Models\MediaItem;
 use App\Models\Message;
 use App\Models\Post;
 use App\Models\Project;
 use App\Models\StackCategory;
+use App\Models\StoredFile;
 use App\Models\User;
+use App\Services\ImageProcessor;
 use App\Services\PortfolioContent;
+use App\Support\Media;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class AdminDashboardTest extends TestCase
@@ -24,7 +27,6 @@ class AdminDashboardTest extends TestCase
         parent::setUp();
         $user = User::factory()->create(['username' => 'eslopezm', 'name' => 'Eli Santiago López Mahecha', 'is_admin' => true]);
         $this->actingAs($user)->withSession(['admin_last_activity' => time()]);
-        Storage::fake('uploads');
         PortfolioContent::flush();
     }
 
@@ -213,15 +215,21 @@ class AdminDashboardTest extends TestCase
         $this->assertSame('5+', $content['stats'][0]['value']);
     }
 
-    public function test_image_uploads_accept_images_only(): void
+    public function test_image_uploads_accept_images_only_and_are_stored_in_the_database(): void
     {
-        $this->post('/admin-dcc/imagenes', ['images' => [UploadedFile::fake()->image('foto.jpg', 600, 400)]])->assertSessionDoesntHaveErrors();
+        $this->post('/admin-dcc/imagenes', ['images' => [UploadedFile::fake()->image('foto.jpg', 3000, 1000)]])->assertSessionDoesntHaveErrors();
         $this->post('/admin-dcc/imagenes', ['images' => [UploadedFile::fake()->create('shell.php', 10, 'application/x-php')]])->assertSessionHasErrors('images.0');
         $this->post('/admin-dcc/imagenes', ['images' => [UploadedFile::fake()->create('x.svg', 10, 'image/svg+xml')]])->assertSessionHasErrors('images.0');
 
         $item = MediaItem::firstOrFail();
         $this->assertSame('dcc', $item->scope);
-        Storage::disk('uploads')->assertExists(substr($item->path, strlen('uploads/')));
+
+        $stored = StoredFile::firstOrFail();
+        $this->assertSame('image/webp', $stored->mime);
+        $this->assertSame([1200, 900], [$stored->width, $stored->height]); // preset «gallery» recorta al marco 4:3
+
+        $this->get($item->url())->assertOk()->assertHeader('Content-Type', 'image/webp')->assertHeader('X-Content-Type-Options', 'nosniff');
+        $this->get($item->url())->assertHeader('ETag');
 
         $this->get('/dcc')->assertOk()->assertSee($item->url(), false);
         $this->post("/admin-dcc/visible/media/{$item->id}");
@@ -229,7 +237,34 @@ class AdminDashboardTest extends TestCase
 
         $this->delete("/admin-develop/imagenes/{$item->id}")->assertNotFound(); // otra área
         $this->delete("/admin-dcc/imagenes/{$item->id}");
-        Storage::disk('uploads')->assertMissing(substr($item->path, strlen('uploads/')));
+        $this->assertSame(0, StoredFile::count());
+    }
+
+    public function test_images_are_resized_by_preset_without_upscaling(): void
+    {
+        $processor = app(ImageProcessor::class);
+
+        $cover = $processor->process(UploadedFile::fake()->image('a.jpg', 2400, 2400), 'blog_cover');
+        $this->assertSame([1280, 720], [$cover['width'], $cover['height']]);
+
+        $inline = $processor->process(UploadedFile::fake()->image('b.png', 3000, 1500), 'blog_inline');
+        $this->assertSame([1200, 600], [$inline['width'], $inline['height']]);
+
+        $small = $processor->process(UploadedFile::fake()->image('c.png', 300, 200), 'blog_inline');
+        $this->assertSame([300, 200], [$small['width'], $small['height']]); // nunca agranda
+    }
+
+    public function test_stored_files_reject_unknown_or_malformed_names(): void
+    {
+        $this->get('/files/'.str_repeat('a', 40).'.webp')->assertNotFound();
+        $this->get('/files/..%2F.env')->assertNotFound();
+        $this->get('/files/'.str_repeat('a', 40).'.php')->assertNotFound();
+    }
+
+    public function test_inline_blog_image_upload_returns_the_final_size(): void
+    {
+        $this->postJson('/admin-develop/blogs/imagen', ['image' => UploadedFile::fake()->image('i.jpg', 2000, 1000)])
+            ->assertOk()->assertJson(['width' => 1200, 'height' => 600])->assertJsonStructure(['url']);
     }
 
     public function test_calendar_events_show_on_the_dcc_page_and_can_be_hidden(): void
@@ -270,5 +305,22 @@ class AdminDashboardTest extends TestCase
         $project = Project::where('title', 'P')->firstOrFail();
         $this->assertSame([['label' => 'Sitio', 'url' => 'https://ok.example', 'featured' => true]], $project->links);
         $this->assertSame(['Laravel', 'PHP'], $project->tags);
+    }
+
+    public function test_certificate_pdfs_are_stored_in_the_database_and_served_as_pdf(): void
+    {
+        $this->post('/admin-develop/certificados', [
+            'title' => 'Con PDF', 'platform' => 'SENA', 'year' => '2026', 'category' => 'curso',
+            'pdf' => UploadedFile::fake()->createWithContent('c.pdf', "%PDF-1.4\n%fake\n"),
+            'preview' => UploadedFile::fake()->image('p.png', 900, 900),
+        ])->assertSessionDoesntHaveErrors();
+
+        $cert = Certificate::where('title', 'Con PDF')->firstOrFail();
+        $this->get($cert->pdfUrl())->assertOk()->assertHeader('Content-Type', 'application/pdf');
+        $preview = StoredFile::where('name', Media::fileName($cert->preview))->firstOrFail();
+        $this->assertSame([800, 600], [$preview->width, $preview->height]);
+
+        $this->delete("/admin-develop/certificados/{$cert->id}");
+        $this->assertSame(0, StoredFile::count());
     }
 }

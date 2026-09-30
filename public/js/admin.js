@@ -58,12 +58,32 @@
     });
   });
 
+  // ── Aviso si la imagen elegida es más pequeña que el tamaño ideal ──
+  document.querySelectorAll('input[type=file][data-w]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var warn = input.parentElement.querySelector('.img-warn'); if (!warn) return;
+      warn.hidden = true; warn.textContent = '';
+      Array.prototype.forEach.call(input.files, function (file) {
+        var url = URL.createObjectURL(file), img = new Image();
+        img.onload = function () {
+          var w = +input.dataset.w, h = +input.dataset.h || 0;
+          if (img.width < w || (h && img.height < h)) {
+            warn.hidden = false;
+            warn.textContent += '⚠ «' + file.name + '» mide ' + img.width + '×' + img.height + ' px: es menor que el ideal y se verá borrosa. ';
+          }
+          URL.revokeObjectURL(url);
+        };
+        img.src = url;
+      });
+    });
+  });
+
   // ── Editor de blogs ──
   var area = document.getElementById('editorArea');
   if (!area) return;
   var field = document.getElementById('contentField'), form = area.closest('form');
   area.innerHTML = field.value;
-  function sync() { field.value = area.innerHTML; }
+  var sync = function () { field.value = area.innerHTML; };
   area.addEventListener('input', sync);
   form.addEventListener('submit', sync);
   function cmd(name, val) { area.focus(); document.execCommand(name, false, val || null); sync(); }
@@ -83,13 +103,29 @@
   };
   document.querySelectorAll('[data-cmd]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); actions[b.getAttribute('data-cmd')](); }); });
 
+  var sizeSel = document.getElementById('imgSize'), selected = null;
+  area.addEventListener('click', function (e) {
+    if (selected) selected.classList.remove('sel');
+    selected = e.target.tagName === 'IMG' ? e.target : null;
+    if (selected) { selected.classList.add('sel'); sizeSel.value = selected.getAttribute('width') || ''; }
+  });
+  sizeSel.addEventListener('change', function () {
+    if (!selected) return;
+    if (sizeSel.value) selected.setAttribute('width', sizeSel.value); else selected.removeAttribute('width');
+    selected.removeAttribute('height'); sync();
+  });
+
   var input = document.getElementById('inlineImage');
   input.addEventListener('change', function () {
     if (!input.files[0]) return;
     var fd = new FormData(); fd.append('image', input.files[0]);
     fetch(input.getAttribute('data-url'), { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf, 'Accept': 'application/json' }, body: fd })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-      .then(function (d) { var alt = prompt('Texto alternativo de la imagen (SEO y accesibilidad)', '') || ''; cmd('insertHTML', '<img src="' + d.url + '" alt="' + alt.replace(/"/g, '&quot;') + '"><p><br></p>'); })
+      .then(function (d) {
+        var alt = prompt('Texto alternativo de la imagen (SEO y accesibilidad)', '') || '';
+        var w = sizeSel.value ? Math.min(+sizeSel.value, d.width || 9999) : '';
+        cmd('insertHTML', '<img src="' + d.url + '" alt="' + alt.replace(/"/g, '&quot;') + '"' + (w ? ' width="' + w + '"' : '') + '><p><br></p>');
+      })
       .catch(function () { alert('No se pudo subir la imagen (máx. 5 MB, JPG/PNG/WEBP/GIF).'); })
       .then(function () { input.value = ''; });
   });

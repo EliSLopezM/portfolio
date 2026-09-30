@@ -14,7 +14,7 @@ class Post extends Model
 {
     protected $fillable = [
         'title', 'slug', 'excerpt', 'content', 'category', 'author',
-        'cover_image', 'video_url', 'video_path',
+        'cover_image', 'video_url',
         'meta_title', 'meta_description', 'keywords',
         'published', 'published_at',
     ];
@@ -93,11 +93,6 @@ class Post extends Model
         }
 
         return Media::url($this->cover_image, file_exists(public_path('images/blog/'.$this->cover_image)) ? 'images/blog' : 'images');
-    }
-
-    public function videoUploadUrl(): ?string
-    {
-        return Media::url($this->video_path);
     }
 
     /** ID de YouTube / Vimeo convertido en URL de embed segura (lista blanca de hosts). */

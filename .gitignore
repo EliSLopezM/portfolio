@@ -23,5 +23,3 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
-# Archivos subidos desde el dashboard (usa un volumen persistente o UPLOADS_DISK=s3 en producción)
-/public/uploads

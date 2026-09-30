@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Post;
+use App\Models\StoredFile;
 use App\Services\SeoGenerator;
 use App\Services\UploadService;
 use App\Support\Media;
@@ -60,7 +61,6 @@ class PostController extends AdminController
         abort_unless($post->isDcc() === ($this->area() === 'dcc'), 404);
 
         $this->uploads->delete($post->cover_image);
-        $this->uploads->delete($post->video_path);
         $post->delete();
 
         return redirect($this->to('posts.index'))->with('status', 'Blog eliminado.');
@@ -85,11 +85,12 @@ class PostController extends AdminController
     /** Imagen insertada dentro del cuerpo del artículo. */
     public function uploadImage(Request $request): JsonResponse
     {
-        $request->validate(['image' => ['required', ...UploadService::IMAGE_RULES]]);
+        $request->validate(['image' => ['required', ...UploadService::imageRules()]]);
 
-        $path = $this->uploads->store($request->file('image'), 'blog/inline');
+        $path = $this->uploads->storeImage($request->file('image'), 'blog_inline');
+        $file = StoredFile::where('name', Media::fileName($path))->first(['width', 'height']);
 
-        return response()->json(['url' => Media::url($path)]);
+        return response()->json(['url' => Media::url($path), 'width' => $file?->width, 'height' => $file?->height]);
     }
 
     private function form(Post $post)
@@ -112,11 +113,9 @@ class PostController extends AdminController
             'category' => ['required', Rule::in($categories)],
             'published' => ['boolean'],
             'published_at' => ['nullable', 'date'],
-            'cover' => ['nullable', ...UploadService::IMAGE_RULES],
+            'cover' => ['nullable', ...UploadService::imageRules()],
             'remove_cover' => ['boolean'],
             'video_url' => ['nullable', 'url:https', 'max:255', 'regex:#^https://(www\.)?(youtube\.com/(watch\?|shorts/)|youtu\.be/|vimeo\.com/\d)#'],
-            'video' => ['nullable', ...UploadService::VIDEO_RULES],
-            'remove_video' => ['boolean'],
             'meta_title' => ['nullable', 'string', 'max:70'],
             'meta_description' => ['nullable', 'string', 'max:170'],
             'keywords' => ['nullable', 'string', 'max:255'],
@@ -129,11 +128,6 @@ class PostController extends AdminController
             $this->uploads->delete($post->cover_image);
         }
 
-        $videoPath = $request->boolean('remove_video') ? null : $post->video_path;
-        if ($request->boolean('remove_video')) {
-            $this->uploads->delete($post->video_path);
-        }
-
         $published = $request->boolean('published');
 
         $post->fill([
@@ -144,9 +138,8 @@ class PostController extends AdminController
             'excerpt' => $data['excerpt'],
             'content' => $data['content'],
             'category' => $data['category'],
-            'cover_image' => $this->uploads->replace($request->file('cover'), $cover, 'blog'),
+            'cover_image' => $this->uploads->replaceImage($request->file('cover'), $cover, 'blog_cover'),
             'video_url' => $data['video_url'] ?? null,
-            'video_path' => $this->uploads->replace($request->file('video'), $videoPath, 'blog/video'),
             'meta_title' => $data['meta_title'] ?? null,
             'meta_description' => $data['meta_description'] ?? null,
             'keywords' => $data['keywords'] ?? null,

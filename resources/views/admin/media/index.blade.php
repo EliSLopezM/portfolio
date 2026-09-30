@@ -7,7 +7,7 @@
 <form class="card" method="POST" action="{{ route("admin.$area.media.store") }}" enctype="multipart/form-data">@csrf
   <h2>Subir imágenes</h2>
   <div class="row">
-    <div class="field"><label for="images">Archivos (JPG, PNG, WEBP, GIF · máx. 5 MB)</label><input type="file" id="images" name="images[]" accept="image/jpeg,image/png,image/webp,image/gif" multiple required></div>
+    <div class="field"><label for="images">Archivos </label>@include('admin.partials.img-input', ['name' => 'images', 'preset' => 'gallery', 'id' => 'images', 'multiple' => true, 'required' => true])</div>
     <div class="field"><label for="title">Título (opcional)</label><input type="text" id="title" name="title" maxlength="120"></div>
     <div class="field"><label for="alt">Texto alternativo</label><input type="text" id="alt" name="alt" maxlength="160"></div>
   </div>
@@ -22,7 +22,7 @@
     <form method="POST" action="{{ route("admin.$area.media.update", $m) }}" enctype="multipart/form-data">@csrf @method('PUT')
       <div class="field"><input type="text" name="title" value="{{ $m->title }}" placeholder="Título" maxlength="120" aria-label="Título"></div>
       <div class="field"><input type="text" name="alt" value="{{ $m->alt }}" placeholder="Texto alternativo" maxlength="160" aria-label="Texto alternativo"></div>
-      <div class="field"><input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" aria-label="Reemplazar imagen"></div>
+      <div class="field">@include('admin.partials.img-input', ['name' => 'image', 'preset' => 'gallery'])</div>
       <button class="btn sm" type="submit">Guardar</button>
     </form>
     <div style="margin-top:.6rem;display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap">

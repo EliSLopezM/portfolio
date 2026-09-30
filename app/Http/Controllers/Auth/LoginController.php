@@ -86,6 +86,10 @@ class LoginController extends Controller
 
     private function passesRecaptcha(Request $request, RecaptchaVerifier $recaptcha): bool
     {
+        if ($recaptcha->bypassed()) {
+            return true;
+        }
+
         if (! $recaptcha->configured()) {
             // Sin claves solo se permite en local; en producción el login falla cerrado.
             return app()->environment('local', 'testing');

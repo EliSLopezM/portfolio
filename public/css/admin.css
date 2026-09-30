@@ -63,3 +63,5 @@ button.pill{cursor:pointer;background:none}
 .hub{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}.hub a.card{display:block;color:var(--text);transition:border-color .2s}.hub a.card:hover{border-color:var(--accent);text-decoration:none}
 .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
 @media(max-width:900px){.shell{grid-template-columns:1fr}.side{position:static;height:auto}.side nav{flex-direction:row;flex-wrap:wrap}.cols{grid-template-columns:1fr}}
+.img-hint{line-height:1.5}.img-hint strong{color:var(--accent)}.img-warn{display:block;color:var(--danger);margin-top:.2rem}
+.editor-area img{cursor:pointer}.editor-area img.sel{outline:3px solid var(--accent);outline-offset:2px}.sr-only{position:absolute;left:-9999px}

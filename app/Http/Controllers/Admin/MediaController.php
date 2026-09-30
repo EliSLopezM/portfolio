@@ -21,7 +21,7 @@ class MediaController extends AdminController
     {
         $request->validate([
             'images' => ['required', 'array', 'max:20'],
-            'images.*' => UploadService::IMAGE_RULES,
+            'images.*' => UploadService::imageRules(),
             'title' => ['nullable', 'string', 'max:120'],
             'alt' => ['nullable', 'string', 'max:160'],
         ]);
@@ -31,7 +31,7 @@ class MediaController extends AdminController
                 'scope' => $this->area(),
                 'title' => $request->input('title'),
                 'alt' => $request->input('alt'),
-                'path' => $this->uploads->store($file, 'media/'.$this->area()),
+                'path' => $this->uploads->storeImage($file, 'gallery'),
             ]);
         }
 
@@ -45,13 +45,13 @@ class MediaController extends AdminController
         $data = $request->validate([
             'title' => ['nullable', 'string', 'max:120'],
             'alt' => ['nullable', 'string', 'max:160'],
-            'image' => ['nullable', ...UploadService::IMAGE_RULES],
+            'image' => ['nullable', ...UploadService::imageRules()],
         ]);
 
         $media->update([
             'title' => $data['title'] ?? null,
             'alt' => $data['alt'] ?? null,
-            'path' => $this->uploads->replace($request->file('image'), $media->path, 'media/'.$this->area()),
+            'path' => $this->uploads->replaceImage($request->file('image'), $media->path, 'gallery'),
         ]);
 
         return back()->with('status', 'Imagen actualizada.');

@@ -12,7 +12,7 @@
   </div>
   <div class="row">
     <div class="field"><label for="pdf">PDF del certificado (máx. 10 MB)</label>@if($certificate->pdfUrl())<p class="hint"><a href="{{ $certificate->pdfUrl() }}" target="_blank" rel="noopener">Ver PDF actual</a></p>@endif<input type="file" id="pdf" name="pdf" accept="application/pdf"></div>
-    <div class="field"><label for="preview">Imagen de vista previa</label>@if($certificate->previewUrl())<img src="{{ $certificate->previewUrl() }}" alt="" style="max-width:180px;border-radius:6px;display:block;margin-bottom:.4rem">@endif<input type="file" id="preview" name="preview" accept="image/jpeg,image/png,image/webp,image/gif"></div>
+    <div class="field"><label for="preview">Imagen de vista previa</label>@if($certificate->previewUrl())<img src="{{ $certificate->previewUrl() }}" alt="" style="max-width:180px;border-radius:6px;display:block;margin-bottom:.4rem">@endif@include('admin.partials.img-input', ['name' => 'preview', 'preset' => 'certificate', 'id' => 'preview'])</div>
   </div>
   <button class="btn" type="submit">Guardar</button>
 </form>

@@ -9,6 +9,12 @@ class RecaptchaVerifier
 {
     public const MIN_SCORE = 0.5;
 
+    /** Solo en APP_ENV=local y con RECAPTCHA_BYPASS_LOCAL=true: permite probar el sitio sin reCAPTCHA. Nunca en producción. */
+    public function bypassed(): bool
+    {
+        return app()->environment('local') && config('services.recaptcha.bypass_local');
+    }
+
     public function configured(): bool
     {
         return filled(config('services.recaptcha.secret_key'));

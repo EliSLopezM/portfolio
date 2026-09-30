@@ -52,7 +52,7 @@ class PortfolioController extends Controller
 
         // Verificación reCAPTCHA — solo se activa si hay secret key configurada.
         $score = null;
-        if ($recaptcha->configured()) {
+        if ($recaptcha->configured() && ! $recaptcha->bypassed()) {
             $result = $recaptcha->verify($request->input('g-recaptcha-response'), 'contact', $request->ip());
 
             if (! $result['ok']) {

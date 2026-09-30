@@ -6,4 +6,4 @@
 </div>
 <div class="field"><label for="type">Descripción corta</label><input type="text" id="type" name="type" value="{{ old('type', $item->type) }}" maxlength="120" placeholder="Framework backend"></div>
 <div class="field"><label for="icon_url">Icono (URL https)</label><input type="text" id="icon_url" name="icon_url" value="{{ old('icon_url', \Illuminate\Support\Str::startsWith($item->icon, 'uploads/') ? '' : $item->icon) }}" maxlength="8000" placeholder="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"></div>
-<div class="field"><label for="icon_file">…o subir icono (PNG/JPG/WEBP)</label><input type="file" id="icon_file" name="icon_file" accept="image/png,image/jpeg,image/webp,image/gif"></div>
+<div class="field"><label for="icon_file">…o subir icono (PNG/JPG/WEBP)</label>@include('admin.partials.img-input', ['name' => 'icon_file', 'preset' => 'icon', 'id' => 'icon_file'])</div>

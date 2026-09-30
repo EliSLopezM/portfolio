@@ -19,7 +19,7 @@
     <p class="hint">Formato: Etiqueta | https://url | destacado (opcional: el enlace «destacado» aparece sobre la imagen).</p></div>
   <div class="field"><label for="image">Imagen</label>
     @if($project->imageUrl())<img src="{{ $project->imageUrl() }}" alt="" style="max-width:260px;border-radius:6px;display:block;margin-bottom:.5rem"><label class="check"><input type="checkbox" name="remove_image" value="1"> Quitar imagen</label>@endif
-    <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp,image/gif"></div>
+    @include('admin.partials.img-input', ['name' => 'image', 'preset' => 'project', 'id' => 'image'])</div>
   <button class="btn" type="submit">Guardar</button>
 </form>
 @endsection

@@ -184,15 +184,31 @@ Variables obligatorias en producción (ver `.env.example`): `RECAPTCHA_SITE_KEY`
 (sin ellas el login queda bloqueado a propósito), `APP_URL`, `TRUSTED_PROXIES=*` si hay proxy, y
 `SESSION_SECURE_COOKIE=true`. **La contraseña nunca se guarda en el repositorio**: solo su hash en la base de datos.
 
-Las imágenes/PDF/videos subidos van a `public/uploads` (`UPLOADS_DISK=uploads`). Si el hosting tiene disco
-efímero (Railway, Heroku…), monta un volumen persistente en esa carpeta o configura `UPLOADS_DISK=s3`.
+Las imágenes y PDF subidos se guardan **en la base de datos** (tabla `stored_files`) y se sirven desde `/files/…`,
+así no se pierden al redesplegar. Los videos se enlazan desde YouTube/Vimeo. Haz respaldo de la base de datos como siempre.
+
+Para probar en tu PC sin reCAPTCHA: en tu `.env` local pon `APP_ENV=local` y `RECAPTCHA_BYPASS_LOCAL=true`
+(se ignora por completo si `APP_ENV` no es `local`).
+
+### Tamaños de imagen
+
+Todos los tamaños están en **`config/images.php`** (ancho × alto en píxeles, modo `cover`/`fit`). Cada imagen que subes
+se ajusta sola a su tamaño y se guarda en WebP; el formulario indica el tamaño ideal y avisa si la imagen es menor.
+
+| Dónde | Tamaño |
+|---|---|
+| Portada del blog / Proyecto | 1280 × 720 (16:9) |
+| Imagen dentro del blog | ancho máx. 1200 px (en el editor eliges 400 / 700 / 1000 / completo) |
+| Galería (DCC y Develop) | 1200 × 900 (4:3) |
+| Vista previa de certificado | 800 × 600 (4:3) |
+| Icono de tecnología | 128 × 128 |
 
 ### Seguridad
 
 reCAPTCHA v3 + honeypot, bloqueo por usuario/IP tras 5 intentos, sesión regenerada y cierre por inactividad (30 min),
 CSRF, cookies `Secure/HttpOnly`, CSP y cabeceras de seguridad, middleware anti-patrones SQL en todos los formularios,
 consultas parametrizadas (Eloquent), HTML de blogs sanitizado con HTMLPurifier, validación de archivos por contenido
-(sin SVG ni ejecutables) y nombres aleatorios.
+(sin SVG ni ejecutables), re-codificación de imágenes (elimina metadatos y código oculto) y nombres aleatorios.
 
 ### SEO de los blogs
 

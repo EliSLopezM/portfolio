@@ -2,10 +2,8 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Facades\Storage;
-
 /**
- * Resuelve URLs de archivos: subidos desde el dashboard ("uploads/...")
+ * Resuelve URLs de archivos: subidos desde el dashboard (guardados en la base de datos) ("uploads/...")
  * o heredados del repositorio (carpeta pública `$legacyDir`).
  */
 class Media
@@ -23,10 +21,15 @@ class Media
         }
 
         if (str_starts_with($value, self::UPLOAD_PREFIX)) {
-            return Storage::disk(config('admin.uploads_disk'))->url(substr($value, strlen(self::UPLOAD_PREFIX)));
+            return '/files/'.self::fileName($value);
         }
 
         return asset(trim($legacyDir, '/').'/'.ltrim($value, '/'));
+    }
+
+    public static function fileName(string $path): string
+    {
+        return substr($path, strlen(self::UPLOAD_PREFIX));
     }
 
     public static function isUpload(?string $value): bool

@@ -101,13 +101,13 @@ class StackController extends AdminController
             'type' => ['nullable', 'string', 'max:120'],
             'level' => ['required', Rule::in(array_keys(StackItem::LEVELS))],
             'icon_url' => ['nullable', 'string', 'max:8000', 'regex:'.self::ICON_URL],
-            'icon_file' => ['nullable', ...UploadService::IMAGE_RULES],
+            'icon_file' => ['nullable', ...UploadService::imageRules()],
         ]);
 
         $icon = $data['icon_url'] ?? $item?->icon;
         if ($request->hasFile('icon_file')) {
             $this->uploads->delete($item?->icon);
-            $icon = $this->uploads->store($request->file('icon_file'), 'stack');
+            $icon = $this->uploads->storeImage($request->file('icon_file'), 'icon');
         } elseif ($item && ($data['icon_url'] ?? null) && $data['icon_url'] !== $item->icon) {
             $this->uploads->delete($item->icon);
         }

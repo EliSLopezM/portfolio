@@ -57,7 +57,7 @@ class CertificateController extends AdminController
             'year' => ['required', 'digits:4', 'integer', 'between:1990,2100'],
             'category' => ['required', Rule::in(array_keys(Certificate::CATEGORIES))],
             'pdf' => ['nullable', ...UploadService::PDF_RULES],
-            'preview' => ['nullable', ...UploadService::IMAGE_RULES],
+            'preview' => ['nullable', ...UploadService::imageRules()],
         ]);
 
         return [
@@ -65,8 +65,8 @@ class CertificateController extends AdminController
             'platform' => $data['platform'],
             'year' => $data['year'],
             'category' => $data['category'],
-            'pdf' => $this->uploads->replace($request->file('pdf'), $certificate?->pdf, 'certificates'),
-            'preview' => $this->uploads->replace($request->file('preview'), $certificate?->preview, 'certificates'),
+            'pdf' => $this->uploads->replacePdf($request->file('pdf'), $certificate?->pdf),
+            'preview' => $this->uploads->replaceImage($request->file('preview'), $certificate?->preview, 'certificate'),
             'visible' => $certificate?->visible ?? true,
         ];
     }

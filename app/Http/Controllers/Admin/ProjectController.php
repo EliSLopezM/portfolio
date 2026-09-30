@@ -58,7 +58,7 @@ class ProjectController extends AdminController
             'description' => ['required', 'string', 'max:1500'],
             'tags' => ['nullable', 'string', 'max:300'],
             'links' => ['nullable', 'string', 'max:1000'],
-            'image' => ['nullable', ...UploadService::IMAGE_RULES],
+            'image' => ['nullable', ...UploadService::imageRules()],
             'remove_image' => ['boolean'],
         ]);
 
@@ -76,7 +76,7 @@ class ProjectController extends AdminController
             'description' => $data['description'],
             'tags' => collect(explode(',', $data['tags'] ?? ''))->map(fn ($t) => trim($t))->filter()->take(12)->values()->all(),
             'links' => $this->parseLinks($data['links'] ?? ''),
-            'image' => $this->uploads->replace($request->file('image'), $image, 'projects'),
+            'image' => $this->uploads->replaceImage($request->file('image'), $image, 'project'),
             'visible' => $project?->visible ?? true,
         ];
     }
