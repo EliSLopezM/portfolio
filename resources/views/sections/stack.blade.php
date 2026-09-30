@@ -11,18 +11,14 @@
         </div>
 
         @php
-            $stackGroups = [
-                'backend'        => ['label' => 'Backend', 'sub' => 'Donde más disfruto trabajar — mi área más fuerte.', 'featured' => true],
-                'frontend'       => ['label' => 'Frontend', 'sub' => 'Interfaces y experiencia de usuario.', 'featured' => false],
-                'ciberseguridad' => ['label' => 'Ciberseguridad', 'sub' => 'Gestión de identidad, scripting de seguridad e infraestructura.', 'featured' => false],
-            ];
+            $stackGroups = collect($portfolio['stack_categories'])->keyBy('slug');
             $stackByCategory = collect($portfolio['stack'])->groupBy(fn ($tech) => $tech['category'] ?? 'backend');
         @endphp
 
         <div class="stack-filters" role="group" aria-label="Filtrar tecnologías por nivel">
             <button type="button" class="stack-filter-btn active" data-stack-filter="all">Todos</button>
             <button type="button" class="stack-filter-btn" data-stack-filter="dominio">Dominio</button>
-            <button type="button" class="stack-filter-btn" data-stack-filter="conocimiento">Conocimiento</button>
+            <button type="button" class="stack-filter-btn" data-stack-filter="conocimiento">En estudio</button>
         </div>
 
         @foreach($stackGroups as $groupKey => $groupMeta)
@@ -49,7 +45,7 @@
                                     {!! $tech['svg'] !!}
                                 </div>
                                 <span class="stack-name">{{ $tech['name'] }}</span>
-                                <span class="stack-badge">{{ isset($tech['level']) ? 'Conocimiento' : 'Dominio' }}</span>
+                                <span class="stack-badge">{{ isset($tech['level']) ? 'En estudio' : 'Dominio' }}</span>
                             </div>
 
                             {{-- Reverso --}}
@@ -59,7 +55,7 @@
                                 </div>
                                 <span class="stack-name-back">{{ $tech['name'] }}</span>
                                 @if(isset($tech['level']))
-                                    <span class="stack-level">Conocimiento</span>
+                                    <span class="stack-level">En estudio</span>
                                 @else
                                     <span class="stack-level">Dominio</span>
                                 @endif

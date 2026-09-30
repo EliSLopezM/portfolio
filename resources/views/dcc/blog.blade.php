@@ -247,7 +247,7 @@
             <a href="{{ route('dcc.blog.show', $post->slug) }}" class="dcc-post-card">
                 @if($post->cover_image)
                 <div class="dcc-post-img">
-                    <img src="{{ asset('images/' . $post->cover_image) }}" alt="{{ $post->title }}" loading="lazy">
+                    <img src="{{ $post->coverUrl() }}" alt="{{ $post->title }}" loading="lazy">
                 </div>
                 @endif
                 <div class="dcc-post-body">

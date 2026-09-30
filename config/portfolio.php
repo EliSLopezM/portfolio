@@ -26,6 +26,12 @@ return [
         'paragraph3' => 'Actualmente soy el encargado del área tecnológica en <strong>Steps Consulting Corp</strong>, donde coordino requerimientos, defino arquitecturas y entrego productos a clientes directos.',
     ],
 
+    'stack_categories' => [
+        ['slug' => 'backend',        'label' => 'Backend',        'sub' => 'Donde más disfruto trabajar — mi área más fuerte.', 'featured' => true],
+        ['slug' => 'frontend',       'label' => 'Frontend',       'sub' => 'Interfaces y experiencia de usuario.', 'featured' => false],
+        ['slug' => 'ciberseguridad', 'label' => 'Ciberseguridad', 'sub' => 'Gestión de identidad, scripting de seguridad e infraestructura.', 'featured' => false],
+    ],
+
     'stack' => [
         [
             'name' => 'PHP',

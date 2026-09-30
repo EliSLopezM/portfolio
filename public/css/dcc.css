@@ -542,3 +542,10 @@
     .dcc-gallery-item.dcc-gallery-active { width: 280px; }
     .dcc-gallery-item { width: 180px; }
 }
+/* ── Fechas del calendario administrables ── */
+.dcc-events-list{display:grid;gap:12px;padding:20px 24px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));border-bottom:1px solid var(--dcc-border)}
+.dcc-event-item{display:flex;gap:14px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:rgba(232,112,10,.06);border:1px solid var(--dcc-border)}
+.dcc-event-date{min-width:54px;text-align:center;background:var(--dcc-orange);color:#fff;border-radius:10px;padding:6px 4px;line-height:1.1}
+.dcc-event-date strong{display:block;font-size:1.5rem}.dcc-event-date span{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.dcc-event-reunion .dcc-event-date{background:var(--dcc-blue)}.dcc-event-actividad .dcc-event-date{background:#2e8b57}
+.dcc-event-type{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;opacity:.7}.dcc-event-item h4{margin:2px 0 4px;font-size:1rem}.dcc-event-item small{opacity:.75}.dcc-event-item p{font-size:.85rem;margin-top:4px;opacity:.85}

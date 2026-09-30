@@ -160,3 +160,57 @@ El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Per
 Copyright 2026 Eli Santiago López Mahecha. Todos los derechos reservados sobre el contenido, identidad y material original de este portafolio.
 
 **Eli Santiago López · eslopez.dev@gmail.com**
+
+---
+
+## Dashboard de administración
+
+Acceso privado en `/login` → `/admin` (elige **Admin · Develop** o **Admin · DCC**).
+
+| Área | Qué se administra |
+|---|---|
+| `/admin-develop` | Blogs, imágenes, enlaces (GitHub/LinkedIn) y cifras, tecnologías y categorías, trabajo real, certificados, mensajes de contacto (estados múltiples y acciones masivas) |
+| `/admin-dcc` | Blogs, galería de imágenes y calendario (días especiales, reuniones, actividades) |
+
+### Puesta en marcha / despliegue
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force            # crea tablas e importa el contenido actual de config/portfolio.php
+ADMIN_PASSWORD='<clave de 12+ caracteres>' php artisan admin:create eslopezm
+```
+
+Variables obligatorias en producción (ver `.env.example`): `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY`
+(sin ellas el login queda bloqueado a propósito), `APP_URL`, `TRUSTED_PROXIES=*` si hay proxy, y
+`SESSION_SECURE_COOKIE=true`. **La contraseña nunca se guarda en el repositorio**: solo su hash en la base de datos.
+
+Las imágenes y PDF subidos se guardan **en la base de datos** (tabla `stored_files`) y se sirven desde `/files/…`,
+así no se pierden al redesplegar. Los videos se enlazan desde YouTube/Vimeo. Haz respaldo de la base de datos como siempre.
+
+Para probar en tu PC sin reCAPTCHA: en tu `.env` local pon `APP_ENV=local` y `RECAPTCHA_BYPASS_LOCAL=true`
+(se ignora por completo si `APP_ENV` no es `local`).
+
+### Tamaños de imagen
+
+Todos los tamaños están en **`config/images.php`** (ancho × alto en píxeles, modo `cover`/`fit`). Cada imagen que subes
+se ajusta sola a su tamaño y se guarda en WebP; el formulario indica el tamaño ideal y avisa si la imagen es menor.
+
+| Dónde | Tamaño |
+|---|---|
+| Portada del blog / Proyecto | 1280 × 720 (16:9) |
+| Imagen dentro del blog | ancho máx. 1200 px (en el editor eliges 400 / 700 / 1000 / completo) |
+| Galería (DCC y Develop) | 1200 × 900 (4:3) |
+| Vista previa de certificado | 800 × 600 (4:3) |
+| Icono de tecnología | 128 × 128 |
+
+### Seguridad
+
+reCAPTCHA v3 + honeypot, bloqueo por usuario/IP tras 5 intentos, sesión regenerada y cierre por inactividad (30 min),
+CSRF, cookies `Secure/HttpOnly`, CSP y cabeceras de seguridad, middleware anti-patrones SQL en todos los formularios,
+consultas parametrizadas (Eloquent), HTML de blogs sanitizado con HTMLPurifier, validación de archivos por contenido
+(sin SVG ni ejecutables), re-codificación de imágenes (elimina metadatos y código oculto) y nombres aleatorios.
+
+### SEO de los blogs
+
+Título, descripción, palabras clave, Open Graph/Twitter, JSON-LD `BlogPosting`, canonical y `sitemap.xml` se generan solos
+a partir del título, resumen y contenido. Los campos «SEO» del editor solo sirven para sobrescribir.

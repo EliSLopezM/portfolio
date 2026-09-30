@@ -10,19 +10,22 @@
   <meta name="description" content="@yield('description', $portfolio['tagline'])">
   <meta name="author" content="{{ $portfolio['name'] }}">
   <meta name="theme-color" content="#0a0c0d">
-  <link rel="canonical" href="{{ url()->current() }}">
+  @hasSection('robots')<meta name="robots" content="@yield('robots')">@endif
+  @hasSection('keywords')<meta name="keywords" content="@yield('keywords')">@endif
+  <link rel="canonical" href="@yield('canonical', url()->current())">
 
   {{-- Open Graph --}}
   <meta property="og:title" content="@yield('title', $portfolio['name'])">
   <meta property="og:description" content="@yield('description', $portfolio['tagline'])">
-  <meta property="og:image" content="{{ asset('images/elilogo.png') }}">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ url()->current() }}">
+  <meta property="og:image" content="@yield('og_image', asset('images/elilogo.png'))">
+  <meta property="og:type" content="@yield('og_type', 'website')">
+  <meta property="og:site_name" content="{{ $portfolio['name'] }}">
+  <meta property="og:url" content="@yield('canonical', url()->current())">
   <meta property="og:locale" content="es_CO">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="@yield('title', $portfolio['name'])">
   <meta name="twitter:description" content="@yield('description', $portfolio['tagline'])">
-  <meta name="twitter:image" content="{{ asset('images/elilogo.png') }}">
+  <meta name="twitter:image" content="@yield('og_image', asset('images/elilogo.png'))">
 
   @php
     $structuredData = [

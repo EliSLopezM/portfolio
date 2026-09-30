@@ -21,20 +21,17 @@
 
         {{-- Carrusel spotlight --}}
         <div class="certs-spotlight-wrap" id="certsSpotlight">
-            @php
-                $certsData = json_encode($portfolio['certs']);
-            @endphp
             <div class="certs-spotlight-track" id="certsTrack">
                 @foreach($portfolio['certs'] as $i => $cert)
                 <div class="certs-spotlight-card"
                      data-index="{{ $i }}"
                      data-category="{{ $cert['category'] ?? 'curso' }}"
-                     data-pdf="{{ asset('images/certs/' . $cert['pdf']) }}"
+                     data-pdf="{{ $cert['pdf_url'] ?? $cert['preview_url'] }}"
                      data-title="{{ $cert['title'] }}">
                     <div class="csc-inner">
                         <div class="csc-img-wrap">
-                            @if(!empty($cert['preview']))
-                                <img src="{{ asset('images/certs/' . $cert['preview']) }}"
+                            @if(!empty($cert['preview_url']))
+                                <img src="{{ $cert['preview_url'] }}"
                                      alt="{{ $cert['title'] }}" loading="lazy">
                             @else
                                 <div class="csc-placeholder">

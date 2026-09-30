@@ -227,6 +227,25 @@
                     Suscribirse
                 </a>
             </div>
+            @if($events->isNotEmpty())
+            <div class="dcc-events-list" aria-label="Próximas fechas">
+                @foreach($events as $event)
+                <div class="dcc-event-item dcc-event-{{ $event->type }}">
+                    <div class="dcc-event-date"><strong>{{ $event->starts_on->format('d') }}</strong><span>{{ $event->starts_on->translatedFormat('M') }}</span></div>
+                    <div>
+                        <span class="dcc-event-type">{{ config('admin.event_types')[$event->type] ?? $event->type }}</span>
+                        <h4>{{ $event->title }}</h4>
+                        <small>
+                            @if($event->ends_on) Hasta {{ $event->ends_on->translatedFormat('d M') }} · @endif
+                            @if($event->starts_at) {{ $event->starts_at }} · @endif
+                            {{ $event->location }}
+                        </small>
+                        @if($event->description)<p>{{ $event->description }}</p>@endif
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @endif
             <div class="dcc-calendar-body">
                 <div class="dcc-calendar-embed">
                     <iframe
@@ -240,18 +259,13 @@
         </div>
 
         {{-- Blog preview --}}
-        @php
-        $recentPosts = \App\Models\Post::published()
-        ->whereIn('category', ['dcc-evento', 'dcc-informativo'])
-        ->limit(3)->get();
-        @endphp
         @if($recentPosts->count() > 0)
         <div class="dcc-posts-grid" style="margin-top:48px">
             @foreach($recentPosts as $post)
             <a href="{{ route('dcc.blog.show', $post->slug) }}" class="dcc-post-card">
                 @if($post->cover_image)
                 <div class="dcc-post-img">
-                    <img src="{{ asset('images/' . $post->cover_image) }}" alt="{{ $post->title }}" loading="lazy">
+                    <img src="{{ $post->coverUrl() }}" alt="{{ $post->title }}" loading="lazy">
                 </div>
                 @endif
                 <div class="dcc-post-body">
@@ -314,30 +328,26 @@
 
         <div class="dcc-gallery-wrap" id="dccGalleryWrap">
             <div class="dcc-gallery-track" id="dccGalleryTrack">
-                {{--
-          Para agregar fotos reales reemplaza cada item así:
-          <div class="dcc-gallery-item" data-index="0">
-            <div class="dcc-gallery-inner">
-              <img src="{{ asset('images/dcc/foto1.jpg') }}" alt="Actividad DCC" loading="lazy">
-                <div class="dcc-gallery-caption">Descripción de la foto</div>
+        @forelse($gallery as $i => $photo)
+            <div class="dcc-gallery-item" data-index="{{ $i }}">
+                <div class="dcc-gallery-inner">
+                    <img src="{{ $photo['url'] }}" alt="{{ $photo['alt'] }}" loading="lazy">
+                    @if($photo['title'])<div class="dcc-gallery-caption">{{ $photo['title'] }}</div>@endif
+                </div>
             </div>
-        </div>
-        --}}
+        @empty
         @for($i = 0; $i < 5; $i++)
             <div class="dcc-gallery-item" data-index="{{ $i }}">
-            <div class="dcc-gallery-inner">
-                <div class="dcc-gallery-placeholder">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-                        <rect x="3" y="3" width="18" height="18" rx="3" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <polyline points="21 15 16 10 5 21" />
-                    </svg>
-                    <span>Foto {{ $i + 1 }}</span>
+                <div class="dcc-gallery-inner">
+                    <div class="dcc-gallery-placeholder">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                        <span>Foto {{ $i + 1 }}</span>
+                    </div>
+                    <div class="dcc-gallery-caption">Actividad del Comité Bosa Villa Suaita</div>
                 </div>
-                <div class="dcc-gallery-caption">Actividad del Comité Bosa Villa Suaita</div>
             </div>
-    </div>
-    @endfor
+        @endfor
+        @endforelse
     </div>
     <button class="dcc-gallery-nav dcc-gallery-prev" id="dccGalleryPrev">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -352,10 +362,6 @@
     </div>
     <div class="dcc-gallery-dots" id="dccGalleryDots"></div>
 
-    {{-- Instrucción para agregar fotos --}}
-    <p class="dcc-gallery-hint">
-        Para agregar fotos reales: sube las imágenes a <code>public/images/dcc/</code> y actualiza el blade.
-    </p>
     </div>
 </section>
 
