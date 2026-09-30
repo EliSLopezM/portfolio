@@ -160,3 +160,41 @@ El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Per
 Copyright 2026 Eli Santiago López Mahecha. Todos los derechos reservados sobre el contenido, identidad y material original de este portafolio.
 
 **Eli Santiago López · eslopez.dev@gmail.com**
+
+---
+
+## Dashboard de administración
+
+Acceso privado en `/login` → `/admin` (elige **Admin · Develop** o **Admin · DCC**).
+
+| Área | Qué se administra |
+|---|---|
+| `/admin-develop` | Blogs, imágenes, enlaces (GitHub/LinkedIn) y cifras, tecnologías y categorías, trabajo real, certificados, mensajes de contacto (estados múltiples y acciones masivas) |
+| `/admin-dcc` | Blogs, galería de imágenes y calendario (días especiales, reuniones, actividades) |
+
+### Puesta en marcha / despliegue
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force            # crea tablas e importa el contenido actual de config/portfolio.php
+ADMIN_PASSWORD='<clave de 12+ caracteres>' php artisan admin:create eslopezm
+```
+
+Variables obligatorias en producción (ver `.env.example`): `RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY`
+(sin ellas el login queda bloqueado a propósito), `APP_URL`, `TRUSTED_PROXIES=*` si hay proxy, y
+`SESSION_SECURE_COOKIE=true`. **La contraseña nunca se guarda en el repositorio**: solo su hash en la base de datos.
+
+Las imágenes/PDF/videos subidos van a `public/uploads` (`UPLOADS_DISK=uploads`). Si el hosting tiene disco
+efímero (Railway, Heroku…), monta un volumen persistente en esa carpeta o configura `UPLOADS_DISK=s3`.
+
+### Seguridad
+
+reCAPTCHA v3 + honeypot, bloqueo por usuario/IP tras 5 intentos, sesión regenerada y cierre por inactividad (30 min),
+CSRF, cookies `Secure/HttpOnly`, CSP y cabeceras de seguridad, middleware anti-patrones SQL en todos los formularios,
+consultas parametrizadas (Eloquent), HTML de blogs sanitizado con HTMLPurifier, validación de archivos por contenido
+(sin SVG ni ejecutables) y nombres aleatorios.
+
+### SEO de los blogs
+
+Título, descripción, palabras clave, Open Graph/Twitter, JSON-LD `BlogPosting`, canonical y `sitemap.xml` se generan solos
+a partir del título, resumen y contenido. Los campos «SEO» del editor solo sirven para sobrescribir.
