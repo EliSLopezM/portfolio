@@ -15,6 +15,12 @@
             $stackByCategory = collect($portfolio['stack'])->groupBy(fn ($tech) => $tech['category'] ?? 'backend');
         @endphp
 
+        <div class="stack-filters" role="group" aria-label="Filtrar tecnologías por nivel">
+            <button type="button" class="stack-filter-btn active" data-stack-filter="all">Todos</button>
+            <button type="button" class="stack-filter-btn" data-stack-filter="dominio">Dominio</button>
+            <button type="button" class="stack-filter-btn" data-stack-filter="conocimiento">En estudio</button>
+        </div>
+
         @foreach($stackGroups as $groupKey => $groupMeta)
             @continue($stackByCategory->get($groupKey, collect())->isEmpty())
             <div class="stack-category {{ $groupMeta['featured'] ? 'stack-category-featured' : '' }}">
@@ -30,7 +36,7 @@
 
                 <div class="stack-grid" id="stackGrid-{{ $groupKey }}">
                     @foreach($stackByCategory->get($groupKey) as $index => $tech)
-                    <div class="stack-card" data-index="{{ $index }}">
+                    <div class="stack-card" data-index="{{ $index }}" data-level="{{ isset($tech['level']) ? 'conocimiento' : 'dominio' }}">
                         <div class="stack-card-inner">
 
                             {{-- Frente --}}
@@ -39,9 +45,7 @@
                                     {!! $tech['svg'] !!}
                                 </div>
                                 <span class="stack-name">{{ $tech['name'] }}</span>
-                                @if(isset($tech['level']))
-                                    <span class="stack-badge">En estudio</span>
-                                @endif
+                                <span class="stack-badge">{{ isset($tech['level']) ? 'En estudio' : 'Dominio' }}</span>
                             </div>
 
                             {{-- Reverso --}}
