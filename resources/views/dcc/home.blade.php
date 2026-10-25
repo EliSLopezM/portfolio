@@ -249,6 +249,7 @@
             <div class="dcc-calendar-body">
                 <div class="dcc-calendar-embed">
                     <iframe
+                        title="Calendario de actividades del Comité"
                         src="https://calendar.google.com/calendar/embed?src=defensacivilbosavillasuaita%40gmail.com&ctz=America%2FBogota&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=MONTH&bgcolor=%23ffffff&color=%23E8700A"
                         style="border:0" width="100%" height="480"
                         frameborder="0" scrolling="no"
@@ -349,12 +350,12 @@
         @endfor
         @endforelse
     </div>
-    <button class="dcc-gallery-nav dcc-gallery-prev" id="dccGalleryPrev">
+    <button class="dcc-gallery-nav dcc-gallery-prev" id="dccGalleryPrev" type="button" aria-label="Foto anterior">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="15 18 9 12 15 6" />
         </svg>
     </button>
-    <button class="dcc-gallery-nav dcc-gallery-next" id="dccGalleryNext">
+    <button class="dcc-gallery-nav dcc-gallery-next" id="dccGalleryNext" type="button" aria-label="Foto siguiente">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="9 18 15 12 9 6" />
         </svg>

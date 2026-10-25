@@ -42,6 +42,8 @@
         dotsWrap.innerHTML = '';
         items.forEach(function(_,i){
             var d = document.createElement('button');
+            d.type = 'button';
+            d.setAttribute('aria-label', 'Ir a la foto '+(i+1));
             d.className = 'dcc-gallery-dot'+(i===0?' active':'');
             d.addEventListener('click', function(){ goTo(i); resetTimer(); });
             dotsWrap.appendChild(d);

@@ -43,7 +43,7 @@
   {{-- FOTO --}}
   <div class="hero-photo-wrap">
     <picture>
-      <source srcset="{{ asset('images/EliWeb.webp') }}" type="image/webp">
+      <source type="image/webp" srcset="{{ asset('images/EliWeb-480.webp') }} 480w, {{ asset('images/EliWeb-720.webp') }} 720w, {{ asset('images/EliWeb.webp') }} 900w" sizes="(max-width: 768px) 78vw, 44vw">
       <img src="{{ asset('images/EliWeb.png') }}" alt="Eli Santiago López" class="hero-photo" width="900" height="1350" fetchpriority="high" decoding="async" />
     </picture>
   </div>
@@ -54,13 +54,13 @@
 {{-- MODAL EMAIL --}}
 <div class="email-modal-overlay" id="emailModal">
   <div class="email-modal">
-    <button class="email-modal-close" id="emailModalClose">
+    <button class="email-modal-close" id="emailModalClose" type="button" aria-label="Cerrar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="email-modal-icon">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
     </div>
-    <h3 class="email-modal-title">Enviar mensaje</h3>
+    <h2 class="email-modal-title">Enviar mensaje</h2>
     <p class="email-modal-sub">Hola Eli, estoy interesado en tu perfil</p>
     <a href="mailto:{{ $portfolio['email'] }}?subject=Interesado en tu perfil profesional&body=Hola Eli,%0D%0A%0D%0AEstoy interesado en tu perfil profesional y me gustaría conocer más sobre tu disponibilidad y servicios.%0D%0A%0D%0AQuedo atento a tu respuesta.%0D%0A%0D%0ASaludos,"
        class="btn btn-primary btn-full email-modal-btn">

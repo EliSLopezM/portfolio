@@ -87,7 +87,7 @@
           Ciudad Bolívar, Bogotá — Colombia
         </div>
         <div class="map-container">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63728.85887847566!2d-74.18441565!3d4.5539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9f9fdcecaf43%3A0x93386d1caf86e5bc!2sCiudad%20Bol%C3%ADvar%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+          <iframe title="Mapa de ubicación en Bogotá" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63728.85887847566!2d-74.18441565!3d4.5539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9f9fdcecaf43%3A0x93386d1caf86e5bc!2sCiudad%20Bol%C3%ADvar%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </div>
     </div>

@@ -95,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dotsWrap) {
       for (let i = 0; i <= maxIdx(); i++) {
         const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Ir al grupo ' + (i + 1));
         dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
         dot.addEventListener('click', () => { goTo(i); resetAuto(); });
         dotsWrap.appendChild(dot);
@@ -194,13 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-});
-    document.querySelectorAll('a, button, .btn, .project-card, .stack-item').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-    });
-  }
 
 });
 
@@ -351,6 +346,8 @@ function openCertModal(card) {
         dotsWrap.innerHTML = '';
         visible.forEach(function(_, i) {
             var dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', 'Ir al certificado ' + (i + 1));
             dot.className = 'csc-dot' + (i === 0 ? ' active' : '');
             dot.addEventListener('click', function() { goTo(i); resetAuto(); });
             dotsWrap.appendChild(dot);
