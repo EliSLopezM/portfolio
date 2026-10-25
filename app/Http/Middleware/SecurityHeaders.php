@@ -31,7 +31,7 @@ class SecurityHeaders
             $response->headers->set('Content-Security-Policy', implode('; ', [
                 "default-src 'self'",
                 "script-src 'self' 'nonce-{$nonce}' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/",
-                'frame-src https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://www.google.com/maps/ https://calendar.google.com https://www.youtube-nocookie.com https://player.vimeo.com',
+                "frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://www.google.com/maps/ https://calendar.google.com https://www.youtube-nocookie.com https://player.vimeo.com",
                 "connect-src 'self' https://www.google.com/recaptcha/",
                 "img-src 'self' data: https:",
                 "media-src 'self'",

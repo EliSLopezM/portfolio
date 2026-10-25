@@ -1219,7 +1219,6 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 }
 /* ── RENDIMIENTO: menos trabajo de GPU/CPU (videollamadas, móviles) ── */
 .nav, .email-modal-overlay, .cert-modal-overlay { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-section:not(.hero) { content-visibility: auto; contain-intrinsic-size: auto 600px; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

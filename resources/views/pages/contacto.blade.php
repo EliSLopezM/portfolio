@@ -76,7 +76,7 @@
         </form>
         <div class="contact-links">
           <a href="{{ $portfolio['github'] }}"   target="_blank" rel="noopener" class="contact-link">↗ github.com/EliSLopezM</a>
-          <a href="{{ $portfolio['linkedin'] }}" target="_blank" rel="noopener" class="contact-link">↗ linkedin.com/in/eli-santiago</a>
+          <a href="{{ $portfolio['linkedin'] }}" target="_blank" rel="noopener" class="contact-link">↗ linkedin.com/in/eli-santiago-lopez-mahecha</a>
           <a href="mailto:{{ $portfolio['email'] }}" class="contact-link">↗ {{ $portfolio['email'] }}</a>
           <a href="tel:{{ $portfolio['phone'] }}"    class="contact-link">↗ {{ $portfolio['phone'] }}</a>
         </div>
