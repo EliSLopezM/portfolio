@@ -82,7 +82,7 @@
 </section>
 
 {{-- Modal PDF --}}
-<div class="cert-modal-overlay" id="certModal" role="dialog" aria-modal="true">
+<div class="cert-modal-overlay" id="certModal" role="dialog" aria-modal="true" aria-label="Vista del certificado">
     <div class="cert-modal-box">
         <div class="cert-modal-header">
             <span class="cert-modal-title" id="certModalTitle"></span>

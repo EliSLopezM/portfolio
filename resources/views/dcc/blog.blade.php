@@ -213,6 +213,7 @@
                     {{-- Instrucciones en: /dcc/contacto#calendario --}}
                     <iframe
                         id="dccCalendarFrame"
+                        title="Calendario de actividades del Comité"
                         src="https://calendar.google.com/calendar/embed?src=defensacivilbosavillasuaita%40gmail.com&ctz=America%2FBogota&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&mode=MONTH&color=%23E8700A"
                         style="border:0" width="100%" height="480"
                         frameborder="0" scrolling="no"
