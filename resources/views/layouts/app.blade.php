@@ -29,14 +29,14 @@
 
   @php
     $structuredData = [
-      '@context' => 'https://schema.org',
-      '@type' => 'Person',
+      '@' . 'context' => 'https://schema.org',
+      '@' . 'type' => 'Person',
       'name' => $portfolio['name'],
       'jobTitle' => $portfolio['role'],
       'email' => 'mailto:' . $portfolio['email'],
       'url' => config('app.url'),
       'sameAs' => [$portfolio['github'], $portfolio['linkedin']],
-      'address' => ['@type' => 'PostalAddress', 'addressLocality' => 'Bogota', 'addressCountry' => 'CO'],
+      'address' => ['@' . 'type' => 'PostalAddress', 'addressLocality' => 'Bogota', 'addressCountry' => 'CO'],
     ];
   @endphp
   <script type="application/ld+json">{!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
@@ -55,8 +55,6 @@
 </head>
 
 <body>
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
   @include('partials.nav')
   <main>
     @yield('content')

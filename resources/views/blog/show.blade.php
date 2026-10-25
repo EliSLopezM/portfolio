@@ -34,7 +34,7 @@
 
         @if($post->cover_image)
         <div class="blog-post-cover">
-            <img src="{{ $post->coverUrl() }}" alt="{{ $post->title }}" width="1200" height="630">
+            <img src="{{ $post->coverUrl() }}" alt="{{ $post->title }}" width="1200" height="630" decoding="async">
         </div>
         @endif
 

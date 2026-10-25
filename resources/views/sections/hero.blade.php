@@ -42,7 +42,10 @@
 
   {{-- FOTO --}}
   <div class="hero-photo-wrap">
-    <img src="{{ asset('images/EliWeb.png') }}" alt="Eli Santiago López" class="hero-photo" />
+    <picture>
+      <source srcset="{{ asset('images/EliWeb.webp') }}" type="image/webp">
+      <img src="{{ asset('images/EliWeb.png') }}" alt="Eli Santiago López" class="hero-photo" width="900" height="1350" fetchpriority="high" decoding="async" />
+    </picture>
   </div>
 
   <div class="hero-scroll">scroll</div>

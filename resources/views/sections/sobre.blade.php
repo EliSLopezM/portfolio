@@ -38,7 +38,7 @@
       <div class="about-right">
         <div class="about-card">
           <div class="about-avatar">
-            <img src="https://github.com/EliSLopezM.png" alt="Eli Santiago López" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+            <img src="https://github.com/EliSLopezM.png?size=240" alt="Eli Santiago López" loading="lazy" decoding="async" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
           </div>
           <p class="about-card-name">{{ $portfolio['name'] }}</p>
           <p class="about-card-role">{{ $portfolio['role'] }}</p>
