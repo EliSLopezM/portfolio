@@ -92,11 +92,11 @@ Copia `.env.example` a `.env` y configura SMTP y reCAPTCHA v3:
 
 ```dotenv
 MAIL_MAILER=smtp
+MAIL_SCHEME=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USERNAME=eslopez.dev@gmail.com
 MAIL_PASSWORD=tu_app_password
-MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=eslopez.dev@gmail.com
 MAIL_FROM_NAME="Eli Santiago Lopez"
 RECAPTCHA_SITE_KEY=tu_clave_publica_v3
@@ -106,8 +106,10 @@ WHATSAPP_PHONE_NUMBER_ID=id_del_numero_de_meta
 WHATSAPP_API_VERSION=v23.0
 WHATSAPP_TEMPLATE=portfolio_new_contact
 WHATSAPP_TEMPLATE_LANGUAGE=es_CO
-WHATSAPP_ALERT_TO=573001234567
+WHATSAPP_ALERT_TO=573014255344
 ```
+
+Para Gmail, usa una contrasena de aplicacion en `MAIL_PASSWORD`; no uses la contrasena normal de la cuenta. `MAIL_SCHEME` es la variable que consume la configuracion de Laravel 12.
 
 Los mensajes se guardan en la base de datos y se notifican a `eslopez.dev@gmail.com`. reCAPTCHA v3 valida la accion `contact` con puntuacion minima de `0.5`; el endpoint admite seis envios por minuto por cliente.
 
