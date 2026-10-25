@@ -86,4 +86,23 @@ class UploadAndCspSecurityTest extends TestCase
         $this->assertNotEmpty($m[1] ?? null);
         $this->assertStringContainsString('<script nonce="'.$m[1].'">', $response->getContent());
     }
+
+    public function test_csp_allows_same_origin_frames_for_certificate_pdfs(): void
+    {
+        $csp = $this->get('/')->headers->get('Content-Security-Policy');
+
+        $this->assertMatchesRegularExpression("/frame-src 'self'/", $csp);
+    }
+
+    public function test_linkedin_link_is_the_official_profile_everywhere(): void
+    {
+        $url = 'https://www.linkedin.com/in/eli-santiago-lopez-mahecha-56a9861b9/';
+
+        foreach (['/', '/contacto', '/blog'] as $path) {
+            $html = $this->get($path)->assertOk()->getContent();
+
+            $this->assertStringContainsString($url, $html, "Falta el LinkedIn oficial en {$path}");
+            $this->assertDoesNotMatchRegularExpression('#linkedin.com/in/eli-santiago(?!-lopez)#', $html, "LinkedIn antiguo en {$path}");
+        }
+    }
 }

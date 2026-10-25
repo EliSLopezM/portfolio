@@ -492,3 +492,9 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-open-cert]');
   if (btn) openCertModal(btn.closest('.certs-spotlight-card'));
 });
+
+// Las miniaturas de certificados fuera del carrusel visible no se cargaban (lazy dentro de un track desplazado):
+// al terminar la carga inicial se piden todas, sin afectar el primer pintado.
+window.addEventListener('load', () => {
+  document.querySelectorAll('.certs-spotlight-card img[loading="lazy"]').forEach(img => { img.loading = 'eager'; });
+});
