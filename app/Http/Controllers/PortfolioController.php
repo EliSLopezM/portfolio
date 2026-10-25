@@ -50,7 +50,13 @@ class PortfolioController extends Controller
             'website' => 'nullable|size:0',
         ]);
 
-        // Verificación reCAPTCHA — solo se activa si hay secret key configurada.
+        // Verificación reCAPTCHA. Sin claves solo se permite en local/testing; en producción falla cerrado.
+        if (! $recaptcha->configured() && ! $recaptcha->bypassed() && ! app()->environment('local', 'testing')) {
+            return back()
+                ->withErrors(['recaptcha' => 'No pudimos verificar el reCAPTCHA. Inténtalo de nuevo.'])
+                ->withInput();
+        }
+
         $score = null;
         if ($recaptcha->configured() && ! $recaptcha->bypassed()) {
             $result = $recaptcha->verify($request->input('g-recaptcha-response'), 'contact', $request->ip());

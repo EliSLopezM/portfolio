@@ -6,7 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <title>@yield('title', 'Dashboard') — Admin</title>
-  <link rel="icon" type="image/png" href="{{ asset('elilogo.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('elilogo-192.png') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/admin.css') }}">

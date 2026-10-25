@@ -42,8 +42,8 @@
   <script type="application/ld+json">{!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
   {{-- Favicon --}}
-  <link rel="icon" type="image/png" href="{{ asset('elilogo.png') }}">
-  <link rel="apple-touch-icon" href="{{ asset('elilogo.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('elilogo-192.png') }}">
+  <link rel="apple-touch-icon" href="{{ asset('elilogo-192.png') }}">
 
   {{-- Fonts --}}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
