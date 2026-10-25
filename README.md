@@ -142,7 +142,7 @@ El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Per
 ---
 
 ## 📦 Requisitos
-
+- PHP 8.3+ (recomendado 8.4; producción y pruebas con 8.4.x)
 - PHP 8.2+
 - Composer 2+
 - Node.js 20+ y npm
