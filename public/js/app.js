@@ -490,3 +490,8 @@ function openCertModal(card) {
 
     start();
 })();
+// Abrir modal de certificado (sin onclick inline para cumplir la CSP)
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-open-cert]');
+  if (btn) openCertModal(btn.closest('.certs-spotlight-card'));
+});
