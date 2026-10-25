@@ -22,7 +22,7 @@
     <meta name="twitter:description" content="@yield('description', 'Voluntario DCC Comité Villa Suaita')">
     <meta name="twitter:image" content="@yield('og_image', asset('images/elilogo.png'))">
 
-    <link rel="icon" type="image/png" href="{{ asset('elilogo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('elilogo-192.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">

@@ -111,7 +111,7 @@ Route::middleware('admin')->group(function () {
         Route::get('mensajes', [Admin\MessageController::class, 'index'])->name('messages.index');
         Route::post('mensajes/masivo', [Admin\MessageController::class, 'bulk'])->middleware('sqlguard')->name('messages.bulk');
         Route::get('mensajes/{message}', [Admin\MessageController::class, 'show'])->name('messages.show');
-        Route::put('mensajes/{message}', [Admin\MessageController::class, 'update'])->name('messages.update');
+        Route::put('mensajes/{message}', [Admin\MessageController::class, 'update'])->middleware('sqlguard')->name('messages.update');
         Route::delete('mensajes/{message}', [Admin\MessageController::class, 'destroy'])->name('messages.destroy');
     });
 });
