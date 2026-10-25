@@ -192,15 +192,15 @@ h1.hero-title em { font-style: italic; color: var(--accent); }
 .country-option { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; padding: 0.55rem 0.65rem; color: var(--text); background: transparent; border: 0; border-radius: 2px; font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
 .country-option:hover, .country-option[aria-selected="true"] { color: var(--accent); background: var(--accent-dim); }
 .country-flag { flex: 0 0 auto; width: 1.45rem; height: 1rem; border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,0.2); pointer-events: none; }
-.country-flag.fi { display: inline-block; background-size: cover; background-position: center; }
-.country-flag.fi-co { background-image: url('https://flagcdn.com/w40/co.png'); }
-.country-flag.fi-pr { background-image: url('https://flagcdn.com/w40/pr.png'); }
-.country-flag.fi-us { background-image: url('https://flagcdn.com/w40/us.png'); }
-.country-flag.fi-mx { background-image: url('https://flagcdn.com/w40/mx.png'); }
-.country-flag.fi-es { background-image: url('https://flagcdn.com/w40/es.png'); }
-.country-flag.fi-ar { background-image: url('https://flagcdn.com/w40/ar.png'); }
-.country-flag.fi-cl { background-image: url('https://flagcdn.com/w40/cl.png'); }
-.country-flag.fi-pe { background-image: url('https://flagcdn.com/w40/pe.png'); }
+.country-flag.fi { display: inline-block; background-size: cover; background-position: center; background-repeat: no-repeat; }
+.country-flag.fi-co { background-image: url('/images/flags/co.png'); }
+.country-flag.fi-pr { background-image: url('/images/flags/pr.png'); }
+.country-flag.fi-us { background-image: url('/images/flags/us.png'); }
+.country-flag.fi-mx { background-image: url('/images/flags/mx.png'); }
+.country-flag.fi-es { background-image: url('/images/flags/es.png'); }
+.country-flag.fi-ar { background-image: url('/images/flags/ar.png'); }
+.country-flag.fi-cl { background-image: url('/images/flags/cl.png'); }
+.country-flag.fi-pe { background-image: url('/images/flags/pe.png'); }
 .form-help, .recaptcha-notice { font-size: 11px; color: var(--text3); }
 .recaptcha-notice { line-height: 1.5; margin-top: -0.25rem; }
 .recaptcha-notice a { color: var(--accent); }

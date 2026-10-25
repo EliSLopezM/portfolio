@@ -96,7 +96,7 @@
 @if(config('services.recaptcha.site_key'))
   @push('scripts')
     <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}" async defer></script>
-    <script>
+    <script nonce="{{ $cspNonce ?? '' }}">
       document.querySelector('.contact-form')?.addEventListener('submit', function (event) {
         event.preventDefault();
         grecaptcha.ready(() => grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'contact' }).then((token) => {

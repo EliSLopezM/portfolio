@@ -23,8 +23,8 @@
     <meta name="twitter:image" content="@yield('og_image', asset('images/elilogo.png'))">
 
     <link rel="icon" type="image/png" href="{{ asset('elilogo-192.png') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="preload" href="{{ asset('fonts/DMSans-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dcc.css') }}">
     @stack('head')
