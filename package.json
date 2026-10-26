@@ -5,7 +5,9 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite",
-        "check:js": "node --check public/js/app.js && node --check public/js/dcc.js && node --check public/js/engage.js && node --check public/js/login.js && node --check public/js/admin.js"
+        "check:js": "node --check public/js/app.js && node --check public/js/dcc.js && node --check public/js/engage.js && node --check public/js/login.js && node --check public/js/admin.js",
+        "serve:wsl": "wsl --cd . -d Ubuntu -- php artisan serve --host=0.0.0.0 --port=8000",
+        "test:wsl": "wsl --cd . -d Ubuntu -- php artisan test"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",

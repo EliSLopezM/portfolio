@@ -141,6 +141,18 @@ El layout incluye canonical, Open Graph, Twitter Cards, datos estructurados `Per
 
 ---
 
+## 🖥️ Entorno local (Windows + WSL)
+
+El proyecto exige **PHP 8.3+**. El PHP de XAMPP en Windows (8.2) ya no sirve: `php artisan` falla con *"Your Composer dependencies require a PHP version >= 8.3.0"*. Ejecútalo desde WSL (Ubuntu con PHP 8.3/8.4):
+
+```bash
+npm run serve:wsl   # http://localhost:8000
+npm run test:wsl    # suite de pruebas
+npm run check:js    # valida la sintaxis de los scripts publicos
+```
+
+Extensiones necesarias en PHP: `gd`, `mbstring`, `xml`, `curl`, `zip`, `pdo_sqlite`/`pdo_mysql`. El `composer.lock` está fijado a PHP 8.3 (`config.platform.php`) para que instale igual en Hostinger.
+
 ## 📦 Requisitos
 - PHP 8.3+ (recomendado 8.4; producción y pruebas con 8.4.x)
 - PHP 8.2+
